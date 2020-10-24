@@ -1,0 +1,48 @@
+<div class="row">
+    <?php
+    require ("test_data.php");
+    //$result = ketnoi()->query("SELECT * FROM Thuoc");
+    $sosp=!empty($_GET["sosp"])?$_GET["sosp"]:6;
+    $trang=!empty($_GET["name"])?$_GET["name"]:1;
+    $offset=($trang-1)*$sosp;
+    $conn = mysqli_connect("localhost", "root", "", "qlst");
+     mysqli_set_charset($conn, "utf8");
+    $result = mysqli_query($conn, "SELECT * FROM Thuoc where TenThuoc like '%".$_GET["Empsearch"]."%' limit ".$sosp." offset ".$offset);
+    $r = mysqli_query($conn, "SELECT * FROM Thuoc where TenThuoc like '%".$_GET["Empsearch"]."%'");
+    $s=$r->num_rows;
+    $t=ceil($s/$sosp);
+    while($row = mysqli_fetch_assoc($result)){
+    ?>
+        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <div class="my-list">
+            <img src="images/<?php echo $row['HinhAnh'] ?>" alt="dsadas" style="height: 200px;width: 200px;"/>
+            <h3><?php echo $row['TenThuoc'] ?></h3>
+            <span>Gía: <?php echo $row['GiaBan'] ?></span>
+            <div class="detail">
+            <p><?php echo $row['GhiChu'] ?></p>
+            <img src="images/<?php echo $row['HinhAnh'] ?>" alt="dsadas" style="height: 200px;width: 200px;"/>
+        <a href="#" class="btn btn-info">Thêm</a>
+        <a href="?detail=<?php echo $row['MaThuoc'] ?>" class="btn btn-info">Chi tiết</a>
+            </div>
+        </div>
+        </div>
+        <?php
+    }
+    ?>
+    </div>
+    
+<div class="clearfix"> </div>
+<div align="center" style="font-size: 20px,font-weight: bold;">
+    <?php 
+    for($i=1;$i<=$t;$i++){
+        if($trang!=$i){
+    ?>
+    <a class="page-item" href="?name=<?php echo $i ?>&sosp=<?php echo $sosp ?>" style="font-size: 20px;font-weight: bold;"><?php echo $i ?>      |   </a>
+    <?php
+    }else{
+        ?>
+        <b><?php echo $i ?>     | </b>
+    <?php
+        }}
+    ?>
+</div>
