@@ -24,15 +24,8 @@
                         $ma=selectmax('BenhNhan','MaBN');  
                         $_SESSION['mabn']=$ma;
                          insertHDB($ma,$_SESSION["name"]);
- 
                         $_SESSION['mahdb']=selectmax('HoaDonBan','MaHDB');
                         header('Location:index.php');
-                        //require_once('dsmua.php'); 
-
-
-                       
-
-
                         $r= "Đăng ký thành công.";
                     }catch(PDOException $e){
                               //die("ERROR: Không thể thực thi truy $sql. " . $e->getMessage());

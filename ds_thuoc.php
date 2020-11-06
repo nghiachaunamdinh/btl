@@ -4,7 +4,7 @@
     require ("test_data.php");
     //$result = ketnoi()->query("SELECT * FROM Thuoc");
     $sosp=!empty($_GET["sosp"])?$_GET["sosp"]:6;
-    $trang=!empty($_GET["name"])?$_GET["name"]:1;
+    $trang=!empty($_GET["name"])?$_GET["name"]:1; 
     $offset=($trang-1)*$sosp;
     $conn = mysqli_connect("localhost", "root", "", "qlst");
      mysqli_set_charset($conn, "utf8");
@@ -24,7 +24,17 @@
             <img src="images/<?php echo $row['HinhAnh'] ?>" alt="dsadas" style="height: 200px;width: 200px;"/>
 
             <form action="data_class.php?mathuoc=<?php echo $row['MaThuoc']; ?>" method="POST">
-                <button type="submit" class="btn btn-info" formaction="test.php?mathuoc=<?php echo $row['MaThuoc']; ?>">Thêm</button>
+                <button type="submit" class="btn btn-info" onclick="themthuoc()" formaction="data_class.php?mathuoc=<?php echo $row['MaThuoc']; ?>" name="them<?php echo $row['MaThuoc']; ?>" >Thêm</button>
+                <script type="text/javascript">
+                 function themthuoc() {
+                    var x="";
+                    x='<?php echo empty($_SESSION['mahdb']); ?>';
+                    if(x=='1'){
+                        alert("Bạn hãy điền thông tin bệnh nhân trước khi thêm .");
+                    }
+                }   
+                    
+                </script>
                 <a href="index.php?detail=<?php echo $row['MaThuoc']; ?>" class="btn btn-info"style="padding-top: 15px;">Chi tiết</a>
             </form>
         

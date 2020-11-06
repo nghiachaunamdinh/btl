@@ -8,7 +8,7 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/dangnhap.css">
     
-</head>
+</head> 
 <body>
     <div class="container">
         <?php
@@ -25,8 +25,11 @@
                           try{
                               $sql = "UPDATE DangNhap SET MatKhau='".$_POST['matkhaumoi']."' WHERE MaNV='".$_SESSION["name"]."'";    
                               db()->exec($sql);
+                              echo '<script language="javascript">'; 
+                              echo 'alert("Cập nhật mật khẩu thành công.")'; 
+                              echo '</script>'; 
                               header("Location:index.php");
-                              $r= "Cập nhật mật khẩu thành công.";
+                             
                           } catch(PDOException $e){
                               //die("ERROR: Không thể thực thi truy $sql. " . $e->getMessage());
                               $r="Cập nhật không thành công";

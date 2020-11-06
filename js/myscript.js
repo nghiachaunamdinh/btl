@@ -6,3 +6,9 @@ function testmk(){
     var rawList = "<?php require_once'ketnoi_pdo.php';$t=test('dac');echo $t;?>";
     alert(rawList);
 }
+$(document).ready(function(){
+    $('#soluong').hide();
+
+
+
+});

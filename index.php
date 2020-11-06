@@ -28,7 +28,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script src="js/myscript.js"></script>
-
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 </head>
 <body style="margin: 0px;padding: 0px;">
 <div class="container" style="margin: 0px;padding: 0px; width: 100%;height: 100%;"> 
@@ -127,7 +127,7 @@
           require_once('ds_nhacungcap.php');
         }elseif ($_GET["detail"]=="nhomthuoc") {
           require_once('ds_nhomthuoc.php');
-        }elseif ($_GET["detail"]=="donvitinh") {
+        }elseif ($_GET["detail"]=="donvithuoc") {
           require_once('ds_donvithuoc.php');
         }elseif ($_GET["detail"]=="nhasanxuat") {
           require_once('ds_nhasanxuat.php');
@@ -145,7 +145,7 @@
             require_once('ds_thuoc.php');
         }
       ?>
-  </div> 
+  </div>  
   <div class="col-md-4" >
            <?php
            if(!empty($_SESSION['mabn'])){
@@ -154,7 +154,7 @@
             ?>
             <form action="nhap_benhnhan.php" method="post" accept-charset="utf-8" style="padding-top: 150px;">
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" formaction="nhap_benhnhan.php">Đăng ký mua thuôc </button>
-          </form>
+            </form>
             <?php
           }
           

@@ -20,7 +20,7 @@
                                        insertThuoc($_POST['cv'],$_POST['dvt'],$_POST['nt'],$_POST['giaban'],$_POST['tenthuoc'],$_POST['ghichu'],$_POST['anh']);
                                        header("Location:index.php");
                                   }catch(PDOException $e){
-                                       $r="đăng ký không thành công";
+                                       $r="Thêm thàn công";
                                   }
           }else{
                 $r="Nhập thông tin thuốc .";

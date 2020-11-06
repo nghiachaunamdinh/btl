@@ -301,7 +301,7 @@ function thoigian($s){
  }  
 
  //insert thuốc
- function insertThuoc($MaNSX,$MaDVT,$MaNT,$GiaBan,$TenThuoc,$GhiChu,$HinhAnh)
+ function insertThuoc($MaNSX,$MaDVT,$MaNT,$GiaBan,$TenThuoc,$GhiChu,$HinhAnh) 
  {
     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -310,6 +310,14 @@ function thoigian($s){
     $stmt= $connect->prepare($sql);
     $stmt->execute([$MaNSX,$MaDVT,$MaNT,$GiaBan,$TenThuoc,$GhiChu,$HinhAnh]);
  }
+ //delete thuoc
+function deleteThuoc($t){
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "DELETE FROM ChiTietHoaDonBan WHERE MaThuoc='".$t."'";
+    $stmt= $connect->prepare($sql);
+    $stmt->execute();
+}
  /*function addCTHD($num)
  {
      require_once 'data_class.php';
@@ -328,12 +336,57 @@ function thoigian($s){
  function insertCTHDB($MaHDB,$MaThuoc,$SoLuong)
  {
     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
-    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
     date_default_timezone_set('UTC');
     $date=date('Y/m/d H:i:s');
     //Câu truy vấn
     $sql = "INSERT INTO ChiTietHoaDonBan (MaHDB,MaThuoc,ThoiGian,SoLuong) VALUES (?,?,?,?)";
     $stmt= $connect->prepare($sql);
     $stmt->execute([$MaHDB,$MaThuoc,$date,$SoLuong]);
+ }
+ //tính tông tiền của hóa đơn
+ function sumCTHDB($MaHDB)
+ {
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  
+    $result = $connect->query("select * FROM ChiTietHoaDonBan where MaHDB='".$MaHDB."'");
+   
+    $sum=0;
+   while($row = $result->fetch()) {
+    $sum+= $row['SoLuong']*((FLOAT)giaban($row['MaThuoc']));
+   }
+   return $sum;
+ }
+ //TÌM GIÁ BÁN
+function giaban($MaHDB)
+ {
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM Thuoc where MaThuoc='".$MaHDB."'");
+   while($row = $result->fetch()) {
+    $sum=$row['GiaBan'];
+   }
+   return $sum;
+}
+//update Cthdb
+function UpdateCTHDB($mathuoc,$mahdb,$soluong){
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql="UPDATE ChiTietHoaDonBan SET SoLuong='".$soluong."' WHERE MaThuoc='".$mathuoc."' and MaHDB = '".$mahdb."'";
+   $stmt = $connect->prepare($sql);
+   $stmt->execute();
+}
+//đén số thuốc trong hóa đơn
+function countCTHDB($MaHDB)
+ {
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM ChiTietHoaDonBan where MaHDB='".$MaHDB."'");
+    $sum=0;
+    while($row = $result->fetch()) {
+        $sum++;
+    }
+    return $sum;
  }
 ?>
