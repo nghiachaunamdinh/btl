@@ -11,14 +11,14 @@
 </head>
 <body>
     <div class="container" align="center" style="background-color: #cce0ff;">
-<?php
+<?php 
          session_start();
          require_once 'ketnoi_pdo.php';
          if(isset($_POST['submitbn'])){
          	$sdt=$_POST['sdt'];
          	
             if(testsdt($sdt)){
-
+                 if(testsocmt($_POST['socmt'])==true){
             	    try{
                         insertBN($_POST['tenbn'],$_POST['sdt'],$_POST['socmt'],$_POST['diachi']);  
                         $ma=selectmax('BenhNhan','MaBN');  
@@ -28,10 +28,11 @@
                         header('Location:index.php');
                         $r= "Đăng ký thành công.";
                     }catch(PDOException $e){
-                              //die("ERROR: Không thể thực thi truy $sql. " . $e->getMessage());
                               $r="Đăng ký không thành công";
                     }
-               
+                }else{
+                    $r="Nhập lại số chứng minh thư chỉ chứa số .";
+                }
             }else{ 
             	 $r="Nhập lại số điện thoại(chỉ chứa số, tối đa 10 chữ số) .";
             }

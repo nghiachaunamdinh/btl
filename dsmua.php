@@ -1,6 +1,6 @@
 
-<?php
-    require_once 'PHPExcel-1.8\PHPExcel-1.8\Classes\PHPExcel.php';
+<?php 
+   require_once 'PHPExcel-1.8\PHPExcel-1.8\Classes\PHPExcel.php';
    if(isset($_POST['btnluu'])){
     require_once 'ketnoi_pdo.php';
      $ss=countCTHDB($_SESSION['mahdb']);
@@ -8,9 +8,27 @@
           UpdateCTHDB($_SESSION["mathuoc".$j],$_SESSION['mahdb'],$_POST['soluong'.$j]);
      }
    }
-   
+   if(isset($_POST['btnhuy'])){
+    require_once 'ketnoi_pdo.php';
+     $ss=countCTHDB($_SESSION['mahdb']); 
+     if($ss>0){
+        echo("<script type='text/javascript'>");
+        echo("alert('Phải xóa hết tất cả sản phẩm trong danh sách mua. ');");
+        echo("</script>");
+     }else{
+        //deleteCTHDB($_SESSION['mahdb']);
+        $_SESSION['huy']="";
+        UpdateTinhtrangCTHDB($_SESSION['mahdb']);
+        unset($_SESSION['mabn']);
+        unset($_SESSION['mahdb']);
+        header("Location:index.php");
+      }
+   }
 ?>
+
 <div class="row">
+  <h2 align="center" style="color: red;font-weight: bold;">Chi tiết hóa đơn bán</h2>
+  <hr align="center" style="color: red;font-weight: bold; background-color: red;">
     <table class="table" style="color: #6666ff;" id="dsmuatable">
   <thead class="thead-dark">
     <tr style="color: #6666ff;">
@@ -65,7 +83,7 @@
       <td><input type="text" id="soluong<?php echo $stt;?>" value="<?php echo $row['SoLuong']; ?>" style="width: 30px;" name="soluong<?php echo $stt; ?>" disabled>
       </td>
      
-      <td><input type="text" id="gia<?php echo $row['MaThuoc'];?>" style="width: 80px;" onclick="gia()" disabled value="<?php 
+      <td><input type="text"  style="width: 80px;" onclick="gia()" disabled value="<?php 
             require_once 'ketnoi_pdo.php';
             $nsx = db()->query("SELECT * FROM Thuoc where MaThuoc='".$row["MaThuoc"]."'");
             while($rows = $nsx->fetch()){
@@ -78,7 +96,6 @@
       <td>
         <a  style="color: #d9b3ff;" href="xoa_thuoc.php?mathuoc=<?php echo $row['MaThuoc']; ?>"><i id="xoa" class="far fa-trash-alt xoathuoc" style="font-weight: bold;"></i></a>
         <a  style="color: #d9b3ff;"><i class="fas fa-toolbox suathuoc" style="font-weight: bold;" id="sua"></i></a>
-        <!--<a  style="color: #d9b3ff;" href="update_thuocmua.php?mathuoc=<?php echo $row['MaThuoc']; ?>" id="<?php echo $row['MaThuoc']; ?>"><i class="far fa-save luuthuoc" style="font-weight: bold;" id="luu"></i></a>-->
       </td>
     </tr>
     <?php
@@ -94,10 +111,10 @@
      <tr>
       
       <td colspan="2"><button type="button" class="btn btn-primary" style="height: 30px;" id="thanhtoan" name="thanhtoan" onclick="xuatExcel('dsmuatable','','');" >Thanh Toán </button> </td>
-      <td><button type="button" class="btn btn-success" style="height: 30px;width: 50px; background-color: #ff4d4d;" id="sua"  name="luu" onclick="suads()" >Sửa</button> </td>
+      <td><button type="button" class="btn btn-success" style="height: 30px;width: 50px; background-color: #ff4d4d;" id="sua"  name="sua" onclick="suads()">Sửa</button> </td>
       
       <td><button type="submit" class="btn btn-success" style="height: 30px;width: 50px; background-color: green;" id="luu" onclick=";" name="btnluu">Lưu</button> </td>
-      <td colspan="2"><button type="submit" class="btn btn-success" style="height: 30px;width: 50px; background-color: #ff4d4d;" id="xoa" onclick="xoa();" name="xoa">Xóa</button> </td>
+      <td colspan="2"><button type="submit" class="btn btn-success" style="height: 30px;width: 100px; background-color: #ff4d4d;" id="xoa" onclick="xoa();" name="btnhuy">Hủy đơn</button> </td>
     </tr>
        </form>
   </tbody>
@@ -123,14 +140,6 @@
 
 </div>
 <script type="text/javascript">
-        $(document).ready(function()
-        {
-           $("#luu").click(function()
-           {
-              var username = $("input[name='username']").val();
-           });
-        };
-       
         function suads() {
            var sum='<?php echo $stt;?>';
            for(var i=1;i<=sum;i++){

@@ -12,7 +12,7 @@
     $r = mysqli_query($conn, "SELECT * FROM Thuoc");
     $s=$r->num_rows;
     $t=ceil($s/$sosp);
-    while($row = mysqli_fetch_assoc($result)){
+    while($row = mysqli_fetch_assoc($result)){ 
     ?>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <div class="my-list">

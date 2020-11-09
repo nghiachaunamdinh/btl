@@ -1,5 +1,5 @@
 <?php
-
+ 
 //kết nối bnagwf phương thức PDO
 function db(){
    $options = [
@@ -361,7 +361,7 @@ function deleteThuoc($t){
  //TÌM GIÁ BÁN
 function giaban($MaHDB)
  {
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', ''); 
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM Thuoc where MaThuoc='".$MaHDB."'");
    while($row = $result->fetch()) {
@@ -377,6 +377,8 @@ function UpdateCTHDB($mathuoc,$mahdb,$soluong){
    $stmt = $connect->prepare($sql);
    $stmt->execute();
 }
+
+
 //đén số thuốc trong hóa đơn
 function countCTHDB($MaHDB)
  {
@@ -389,4 +391,71 @@ function countCTHDB($MaHDB)
     }
     return $sum;
  }
+ //xóa hóa đơn
+ function deleteCTHDB($t){
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql = "DELETE FROM HoaDonBan WHERE MaHDB='".$t."'";
+    $stmt= $connect->prepare($sql);
+    $stmt->execute();
+}
+//kiểm tra tồn tại mã thuốc trong ds mua hay chưa
+function testThuocCTHDB($MaThuoc)
+ {
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM ChiTietHoaDonBan where MaThuoc='".$MaThuoc."'");
+    $sum=0;
+    while($row = $result->fetch()) {
+        $sum++;
+    }
+    if($sum==0){
+        return true;
+    }else{
+        return false;
+    }
+ }
+ //trả về số lượng 1 sản phẩm trong dsmua
+ function slthuoc($MaThuoc,$mahdb){
+  $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM ChiTietHoaDonBan where MaThuoc='".$MaThuoc."' and MaHDB = '".$mahdb."'");
+    $t="";
+    while($row = $result->fetch()) {
+       $t= $row['SoLuong'];
+    }
+    return $t;
+}
+ //trả về số lượng sản phẩm đã nhập
+ function slnhap($MaThuoc){
+  $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM ChiTietHoaDonNhap where MaThuoc='".$MaThuoc."'");
+    $t=0;
+    while($row = $result->fetch()) {
+       $t+= $row['SoLuong'];
+    }
+    return $t;
+}
+//trả về số lượng thuốc đã bán
+ function slban($MaThuoc){
+  $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM ChiTietHoaDonBan where MaThuoc='".$MaThuoc."'");
+    $t=0;
+    while($row = $result->fetch()) {
+       $t+= $row['SoLuong'];
+    }
+    return $t;
+}
+
+//update tình trạng hdb
+function UpdateTinhtrangCTHDB($mahdb){
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql="UPDATE HoaDonBan SET TinhTrang='huy' WHERE MaHDB = '".$mahdb."'";
+   $stmt = $connect->prepare($sql);
+   $stmt->execute();
+}
+
 ?>

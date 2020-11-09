@@ -1,4 +1,5 @@
 <?php
+
    session_start();
     require_once 'ketnoi_pdo.php';
     $r="Mật khẩu hoặc tên đăng nhập không đúng .";

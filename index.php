@@ -10,7 +10,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Quản lý thuốc utc</title>
+    <title>Quản lý thuốc UTC</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <!-- Optional theme -->
@@ -20,7 +20,7 @@
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" type="text/css" href="css/ds_thuoc.css">
     <link rel="stylesheet" type="text/css" href="css/doimatkhau.css">
-    <!-- Latest compiled and minified JavaScript -->
+    <!-- Latest compiled and minified JavaScript --> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ek+Mukta">
     <link href="css/index.css" rel="stylesheet" type="text/css" />
@@ -34,18 +34,17 @@
 <div class="container" style="margin: 0px;padding: 0px; width: 100%;height: 100%;"> 
  <div class="row" style="margin: 0px;padding: 0px;width: 100%;height: 100%;">
      <div class="col-md-6" style="margin: 0px;padding: 0px;">
-      <img src="images/utc_title.PNG" alt="" width="100%" height="100%">
+      <a href="https://www.utc.edu.vn/"><img src="images/utc_title.PNG" alt="" width="100%" height="100%"></a>
      </div>
      <div class="col-md-1" style="padding-top: 80px;height: 50px;">
-      <select class="list-group" style="height: 33px;">
+      <!--
+      <select class="list-group" style="height: 33px;" size="5" name="loai[]">
            <option value="0">Loại tìm kiếm</option>
            <option value="Thuoc">Thuốc</option>
            <option value="NhanVien">Nhân viên</option>
            <option value="NhaSanXuat">Nhà sản xuất</option>
            <option value="NhaCungCap">Nhà cung cấp</option>
-           <option value="HoaDonNhap">Hóa Đơn nhập</option>
-           <option value="HoaDonHuy">Hóa đơn bán</option>
-       </select>
+       </select>-->
      </div>
     <div class="col-md-3" style="padding-top: 80px;">
     
@@ -59,16 +58,17 @@
 
      <div class="col-md-2" style="padding-top: 90px;font-size: 15px;font-weight: bold;">
        <a href="dangnhap.php"><i class="fas fa-sign-out-alt"></i>  Đăng xuất   |</a>
-         <a href="">  Đăng xuất|</a>
-      <a href=""><i class="fas fa-phone-alt"></i>Liên hệ   </a>
+        
+      <a href="https://www.utc.edu.vn/"><i class="fas fa-phone-alt"></i>Liên hệ   </a> 
      </div>
  </div>
+ <!--
 <marquee behavior="alternate" id="marq" scrollamount="4" direction="left" loop="50" scrolldelay="0" onmouseover="this.stop()" onmouseout="this.start()">
 <a href="Link"><img src="images/v01.png" title="" width="500" height="150" style="border-right: 1px #b3d9ff solid;"/> </a>
 <a href="Link"><img src="images/v02.png" title="" width="500" height="150" style="border-right: 1px #b3d9ff solid;"/> </a>
 <a href="Link"><img src="images/v03.png" title="" width="500" height="150" style="border-right: 1px #b3d9ff solid;"/> </a>
 <a href="Link"><img src="images/v04.jpg" title="" width="500" height="150"/> </a>
-</marquee>
+</marquee>-->
 
 <hr style="border: 1px #b3d9ff solid;">
 
@@ -87,7 +87,7 @@
      <li><a><i class="far fa-keyboard"></i>    Quản lý thuốc</a> 
            <ul> 
                <li><a href="them_thuoc.php"><i class="fas fa-plus"></i>  Thêm thuốc</a></li> 
-               <li><a href="them_hoadonnhap.php"><i class="fas fa-plus"></i>  Nhập hóa đơn nhập</a> </li> 
+               <li><a href="them_hoadonnhap.php"><i class="fas fa-plus"></i>  Nhập Thuốc</a> </li> 
                <li><a href=""><i class="fas fa-plus"></i>  Bán thuốc</a></li> 
                <li><a href=""><i class="fas fa-plus"></i>  Hủy thuốc</a></li> 
           </ul> 
@@ -147,18 +147,19 @@
       ?>
   </div>  
   <div class="col-md-4" >
-           <?php
-           if(!empty($_SESSION['mabn'])){
-            require_once('dsmua.php');
-          }else{
+          <?php
+              if(empty($_SESSION['mabn'])){
+          ?>
+
+                 <form action="nhap_benhnhan.php" method="post" accept-charset="utf-8" style="padding-top: 150px;">
+                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" formaction="nhap_benhnhan.php">Đăng ký thông tin mua thuốc </button>
+                 </form>
+
+          <?php
+              }else{
+                  require_once('dsmua.php');
+              }
             ?>
-            <form action="nhap_benhnhan.php" method="post" accept-charset="utf-8" style="padding-top: 150px;">
-            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" formaction="nhap_benhnhan.php">Đăng ký mua thuôc </button>
-            </form>
-            <?php
-          }
-          
-           ?>
   </div>
  </div>
             <div class="row text-center padding" style="padding-bottom: 0px;margin-top: 10px;">
@@ -166,9 +167,9 @@
                     <a href="" style="font-size: 30px;padding: 20px;"><i class="fab fa-twitter" style="color: #00aced;"></i></a>
                     <a href="" style="font-size: 30px;padding: 20px;"><i class="fab fa-facebook" style="color: #3b5998;"></i></a>
                     <a href="" style="font-size: 30px;padding: 20px;"><i class="fab fa-google-plus-g" style="color: #dd4b39;"></i></a>
-                    <a href="" style="font-size: 30px;padding: 20px;"><i class="fab fa-instagram" style="color: #517fa4;"></i></a>
-                    <a href="" style="font-size: 30px;padding: 20px;"><i class="fab fa-youtube" style="color: #bb0000;"></i></a>
-                    <a href="/Administrator/Home/Login" style="font-size: 30px;padding: 20px;"><i class="far fa-id-badge"></i></a>
+                    <a href="https://www.instagram.com" style="font-size: 30px;padding: 20px;"><i class="fab fa-instagram" style="color: #517fa4;"></i></a>
+                    <a href="https://www.youtube.com" style="font-size: 30px;padding: 20px;"><i class="fab fa-youtube" style="color: #bb0000;"></i></a>
+                    <a href="https://www.facebook.com/home.php" style="font-size: 30px;padding: 20px;"><i class="far fa-id-badge"></i></a>
                 </div>
             </div>
 </div>

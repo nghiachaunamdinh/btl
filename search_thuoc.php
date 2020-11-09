@@ -1,7 +1,6 @@
 <div class="row">
     <?php
     require ("test_data.php");
-    //$result = ketnoi()->query("SELECT * FROM Thuoc");
     $sosp=!empty($_GET["sosp"])?$_GET["sosp"]:6;
     $trang=!empty($_GET["name"])?$_GET["name"]:1;
     $offset=($trang-1)*$sosp;
