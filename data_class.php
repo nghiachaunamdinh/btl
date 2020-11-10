@@ -20,12 +20,11 @@ if( testThuocCTHDB($_GET["mathuoc"])=="true"){
     UpdateCTHDB($_GET["mathuoc"],$_SESSION['mahdb'],$t."");
     header("Location:index.php"); 
 }
-}else{
-        
-         header("Location:index.php"); 
-        echo '<script language="javascript">'; 
-        echo 'var answer = confirm("Leave tizag.com?")'; 
-        echo '</script>';
+}else{ 
+        echo "<script language='javascript'>"; 
+        echo "alert('Sản phẩm đã hết.Vui lòng chọn sản phẩm khác')"; 
+        echo "</script>";
+        header("Location:index.php"); 
 }
     
  ?> 

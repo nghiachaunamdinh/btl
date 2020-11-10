@@ -8,22 +8,7 @@
           UpdateCTHDB($_SESSION["mathuoc".$j],$_SESSION['mahdb'],$_POST['soluong'.$j]);
      }
    }
-   if(isset($_POST['btnhuy'])){
-    require_once 'ketnoi_pdo.php';
-     $ss=countCTHDB($_SESSION['mahdb']); 
-     if($ss>0){
-        echo("<script type='text/javascript'>");
-        echo("alert('Phải xóa hết tất cả sản phẩm trong danh sách mua. ');");
-        echo("</script>");
-     }else{
-        //deleteCTHDB($_SESSION['mahdb']);
-        $_SESSION['huy']="";
-        UpdateTinhtrangCTHDB($_SESSION['mahdb']);
-        unset($_SESSION['mabn']);
-        unset($_SESSION['mahdb']);
-        header("Location:index.php");
-      }
-   }
+   
 ?>
 
 <div class="row">
@@ -114,7 +99,7 @@
       <td><button type="button" class="btn btn-success" style="height: 30px;width: 50px; background-color: #ff4d4d;" id="sua"  name="sua" onclick="suads()">Sửa</button> </td>
       
       <td><button type="submit" class="btn btn-success" style="height: 30px;width: 50px; background-color: green;" id="luu" onclick=";" name="btnluu">Lưu</button> </td>
-      <td colspan="2"><button type="submit" class="btn btn-success" style="height: 30px;width: 100px; background-color: #ff4d4d;" id="xoa" onclick="xoa();" name="btnhuy">Hủy đơn</button> </td>
+      <td colspan="2"><a href="index.php?huy=t"><button type="button" class="btn btn-success" style="height: 30px;width: 100px; background-color: #ff4d4d;" id="xoa" onclick="huy();" name="btnhuy">Hủy đơn</button></a> </td>
     </tr>
        </form>
   </tbody>
@@ -152,6 +137,13 @@
                document.getElementById('soluong'+i).disabled=true;
            }
         }
+        function huy() {
+          var sum='<?php  require_once 'ketnoi_pdo.php'; echo countCTHDB($_SESSION['mahdb']); ?>';
+          if(sum >0){
+            alert("Hãy xóa tất cả sản phẩm trong danh sách mua. ");
+          }
+        }
+
         function xuatExcel(tablename,headercolor,filename) {
            alert("Bạn phải cung cấp tên bảng");
            if(tablename.trim()===""){

@@ -1,7 +1,7 @@
 
 <div class="row">
     <?php
-    require ("test_data.php");
+    require ("test_data.php"); 
     //$result = ketnoi()->query("SELECT * FROM Thuoc");
     $sosp=!empty($_GET["sosp"])?$_GET["sosp"]:6;
     $trang=!empty($_GET["name"])?$_GET["name"]:1; 
@@ -32,6 +32,7 @@
                     if(x=='1'){
                         alert("Bạn hãy điền thông tin bệnh nhân trước khi thêm .");
                     }
+                     
                 }   
                     
                 </script>

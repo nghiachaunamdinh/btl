@@ -48,7 +48,7 @@
                 </div>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="submit">Đăng nhập</button>
             </form><!-- /form -->
-            <a href="#" class="forgot-password">
+            <a href="nhap_email.php" class="forgot-password">
                 Quên mật khẩu !
             </a>
             <p><?php echo $r ?></p>

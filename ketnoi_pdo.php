@@ -137,6 +137,32 @@ function UpdateCV($manv,$ten,$diachi){
    $stmt = $connect->prepare($sql);
    $stmt->execute();
 }
+//update mật khảu
+function UpdateMatKhauQuen($manv,$matkhau){
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql="UPDATE DangNhap SET MatKhau='".$matkhau."' WHERE MaNV='".$manv."'";
+   $stmt = $connect->prepare($sql);
+   $stmt->execute();
+}
+//test maxn
+function testmaxn($manv,$matkhau){
+   $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM DangNhap where MaNV='".$manv."'");
+    $sum=0;
+    while($row = $result->fetch()) {
+        if($row['MaSN']==$matkhau){
+           $sum++; 
+        }
+    }
+    if($sum==0){
+        return true;
+    }else{
+        return false;
+    }
+}
+
 //insert đơn vị tính
 function insertDVT($sdt,$cmt){
      $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
@@ -158,6 +184,14 @@ function UpdateDVT($manv,$ten,$diachi){
     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE DonViTinh SET TenDVT='".$ten."',GhiChu='".$diachi."' WHERE MaDVT='".$manv."'";
+   $stmt = $connect->prepare($sql);
+   $stmt->execute();
+}
+//update mã sn dang nhap
+function UpdateDangNhap($ten,$manv){
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $sql="UPDATE DangNhap SET MaSN='".$ten."' WHERE Manv='".$manv."'";
    $stmt = $connect->prepare($sql);
    $stmt->execute();
 }

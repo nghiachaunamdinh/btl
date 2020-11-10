@@ -3,9 +3,15 @@
     if(!isset($_SESSION["name"])){
         header("Location:dangnhap.php");
     } 
-    //date_default_timezone_set('Asia/Ho_Chi_Minh');
-    //$date=date_create("2017-02-19");
-    //echo date_format($date,"Y/m/d");
+    if(isset($_GET['huy'])){
+    require_once 'ketnoi_pdo.php';
+     $ss=countCTHDB($_SESSION['mahdb']); 
+     if($ss<=0){
+        UpdateTinhtrangCTHDB($_SESSION['mahdb']);
+        unset($_SESSION['mabn']);
+        unset($_SESSION['mahdb']);
+     }
+   }
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -88,8 +94,8 @@
            <ul> 
                <li><a href="them_thuoc.php"><i class="fas fa-plus"></i>  Thêm thuốc</a></li> 
                <li><a href="them_hoadonnhap.php"><i class="fas fa-plus"></i>  Nhập Thuốc</a> </li> 
-               <li><a href=""><i class="fas fa-plus"></i>  Bán thuốc</a></li> 
-               <li><a href=""><i class="fas fa-plus"></i>  Hủy thuốc</a></li> 
+               <li><a href="index.php?detail=dshdb"><i class="fas fa-plus"></i>  Bán thuốc</a></li> 
+               <li><a href="index.php?detail=dshuy"><i class="fas fa-plus"></i>  Hủy thuốc</a></li> 
           </ul> 
      </li> 
      <li><a href="http://hocwebgiare.com/"><i class="fas fa-paperclip"></i>    Quản lý danh mục</a> 
@@ -112,7 +118,7 @@
        </ul>
         </nav> 
   </div> 
-  <div class="col-md-6" style="border-right: 1px solid blue;">  
+  <div class="col-md-6" style="margin: 0px;padding: 0px;">  
       <?php
       if(isset($_GET["detail"])){
         if($_GET["detail"]=="thongtinnv"){
@@ -131,6 +137,10 @@
           require_once('ds_donvithuoc.php');
         }elseif ($_GET["detail"]=="nhasanxuat") {
           require_once('ds_nhasanxuat.php');
+        }elseif ($_GET["detail"]=="dshuy") {
+          require_once('ds_huy.php');
+        }elseif ($_GET["detail"]=="dshdb") {
+          require_once('ds_hdb.php');
         }elseif ($_GET["detail"]=="chucvu") {
           require_once('ds_chucvu.php');
         }else{
@@ -146,7 +156,7 @@
         }
       ?>
   </div>  
-  <div class="col-md-4" >
+  <div class="col-md-4" style="height: 600px;border-left: 2px solid #99ccff; margin: 0px;padding: 0px;">
           <?php
               if(empty($_SESSION['mabn'])){
           ?>
@@ -162,7 +172,7 @@
             ?>
   </div>
  </div>
-            <div class="row text-center padding" style="padding-bottom: 0px;margin-top: 10px;">
+            <div class="row text-center padding" style="padding-bottom: 0px;margin-top: 10px; margin: 0px;padding: 0px;" >
                 <div class="col-12 ">
                     <a href="" style="font-size: 30px;padding: 20px;"><i class="fab fa-twitter" style="color: #00aced;"></i></a>
                     <a href="" style="font-size: 30px;padding: 20px;"><i class="fab fa-facebook" style="color: #3b5998;"></i></a>
