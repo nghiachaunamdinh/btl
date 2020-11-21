@@ -7,7 +7,7 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/dangnhap.css">
-    
+     <link rel="shortcut icon" type="text/css" href="images/logo_utc.jpg">
 </head> 
 <body>
     <div class="container">

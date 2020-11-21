@@ -11,7 +11,7 @@
            <img src="images/<?php echo $row["HinhAnh"] ?>" alt="dsadas" style="height: 250px;width: 200px;"/>
         </div>
         <div class="col-md-9">
-            <table class="table table-striped">
+            <table class="table table-dark">
                 <caption>Thông tin nhân viên : <?php echo $row["TenNV"] ?></caption>
                 
                 <tbody>

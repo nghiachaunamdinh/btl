@@ -2,7 +2,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Đăng ký tài khoản</title>
+    <title>Đăng ký tài khoản</title> 
     <meta charset="UTF-8">
      <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
@@ -25,11 +25,11 @@
               }
               if($test==""){
                    require_once('ketnoi_pdo.php');
-                   if(testEmail($_POST['email'])==false){
+                   if(testEmail($_POST['email'])==false){ 
                         if(testsdt($_POST['sdt'])==true){
                            if(testsocmt($_POST['cmt'])==true){
                                   try{
-                                       insertNhanVien($_POST['manv'],$_POST['tendangnhap'],$_POST['email'],$_POST['diachi'],$_POST['sdt'],$_POST['cmt'],$_POST['anh'],$_POST['cv']);
+                                       insertNhanVien($_POST['tendangnhap'],$_POST['email'],$_POST['diachi'],$_POST['sdt'],$_POST['cmt'],$_POST['anh'],$_POST['cv']);
                                        header("Location:index.php?detail=nhanvien");
                                   }catch(PDOException $e){
                                        $r="đăng ký không thành công";
@@ -56,7 +56,7 @@
               <img id="profile-img" class="profile-img-card" src="images/logo_utc.jpg" />
                 <h2 style="color: blue;font-weight: bold;" align="center">Thêm nhân viên</h2>
                 <p ></p>
-                 Chọn nhà cung cấp :
+               <!--  Chọn nhà cung cấp :
                 <select class="list-group" style="height: 33px;" name="cv">
                   <option value="0">Chọn</option>
                   <?php
@@ -69,7 +69,7 @@
                         }
                          
                   ?> 
-                </select>
+                </select>-->
                 <br>
                 <input type="text"  class="form-control" placeholder="Tên nhân viên" name="tendangnhap" required>
                 <br>
@@ -86,7 +86,7 @@
                 <br>
                 Chức vụ :
                 <select class="list-group" style="height: 33px;" name="cv">
-                  <option value="0">Loại tìm kiếm</option>
+                  <option value="0">Chọn chức vụ</option>
                   <?php
                         require_once 'ketnoi_pdo.php';
                         $nsx = db()->query("SELECT * FROM ChucVu ");
@@ -106,7 +106,7 @@
             </form><!-- /form -->
             <p></p>
           
-            <a href="ds_nhanvien.php" class="forgot-password">
+            <a href="index.php" class="forgot-password">
                  Quay lại
             </a>
         </div>

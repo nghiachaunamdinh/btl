@@ -1,6 +1,34 @@
 
-<div class="row">
+<div class="row">  
     <?php
+     $arrayName = array();
+  require_once('ketnoi_pdo.php'); 
+  $conn = mysqli_connect("localhost", "root", "", "qlst"); 
+     mysqli_set_charset($conn, "utf8");
+    $result = mysqli_query($conn, "SELECT * FROM Thuoc");
+    while($row = mysqli_fetch_assoc($result)){
+        try {
+             $arrayName[$row['MaThuoc']]=slnhap($row['MaThuoc']);
+        } catch (Exception $e) {
+            $arrayName[$row['MaThuoc']]='0';
+        }
+      
+    }
+    $arrayName2 = array();
+   
+    $result2 = mysqli_query($conn, "SELECT * FROM Thuoc");
+    while($row = mysqli_fetch_assoc($result2)){
+        try {
+             $arrayName2[$row['MaThuoc']]=slban($row['MaThuoc']);
+        } catch (Exception $e) {
+            $arrayName2[$row['MaThuoc']]='0'; 
+        }
+      
+    }
+    $arrayName3 = array();
+    for($i=1;$i<=count($arrayName2);$i++){
+        $arrayName3[$i]=(int)$arrayName[$i]-(int)$arrayName2[$i];
+    }
     require ("test_data.php"); 
     //$result = ketnoi()->query("SELECT * FROM Thuoc");
     $sosp=!empty($_GET["sosp"])?$_GET["sosp"]:6;
@@ -11,7 +39,7 @@
     $result = mysqli_query($conn, "SELECT * FROM Thuoc limit ".$sosp." offset ".$offset);
     $r = mysqli_query($conn, "SELECT * FROM Thuoc");
     $s=$r->num_rows;
-    $t=ceil($s/$sosp);
+    $t=ceil($s/$sosp);//làm tròn tổng số sản phẩm 
     while($row = mysqli_fetch_assoc($result)){ 
     ?>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -23,27 +51,25 @@
             <p><?php echo $row['GhiChu'] ?></p>
             <img src="images/<?php echo $row['HinhAnh'] ?>" alt="dsadas" style="height: 200px;width: 200px;"/>
 
-            <form action="data_class.php?mathuoc=<?php echo $row['MaThuoc']; ?>" method="POST">
-                <button type="submit" class="btn btn-info" onclick="themthuoc()" formaction="data_class.php?mathuoc=<?php echo $row['MaThuoc']; ?>" name="them<?php echo $row['MaThuoc']; ?>" >Thêm</button>
+            
+                <a class="btn btn-info" onclick="themthuoc()" href="data_class.php?mathuoc=<?php echo $row['MaThuoc']; ?>" name="them<?php echo $row['MaThuoc']; ?>" >Thêm</a>
                 <script type="text/javascript">
                  function themthuoc() {
-                    var x="";
+                    var x='';
                     x='<?php echo empty($_SESSION['mahdb']); ?>';
                     if(x=='1'){
                         alert("Bạn hãy điền thông tin bệnh nhân trước khi thêm .");
                     }
-                     
                 }   
-                    
                 </script>
                 <a href="index.php?detail=<?php echo $row['MaThuoc']; ?>" class="btn btn-info"style="padding-top: 15px;">Chi tiết</a>
-            </form>
+           
         
             </div>
         </div>
         </div>
         <?php
-    }
+        }
     ?>
     </div>
     

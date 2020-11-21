@@ -1,17 +1,24 @@
 <?php
-    session_start();
+    session_start(); 
     if(!isset($_SESSION["name"])){
         header("Location:dangnhap.php");
-    } 
-    if(isset($_GET['huy'])){
+    }  
+    if(isset($_POST['btnhuy'])){
     require_once 'ketnoi_pdo.php';
+
      $ss=countCTHDB($_SESSION['mahdb']); 
      if($ss<=0){
-        UpdateTinhtrangCTHDB($_SESSION['mahdb']);
+        UpdateTinhtrangCTHDB($_SESSION['mahdb']); 
         unset($_SESSION['mabn']);
         unset($_SESSION['mahdb']);
      }
-   }
+    }
+    if(isset($_POST['thanhtoan'])){
+    require_once 'ketnoi_pdo.php';
+        if(slthuoctrongdsmua($_SESSION['mahdb'])>0){
+            header("Location:xuat_excel.php?mahdb=".$_SESSION['mahdb']);
+        } 
+    }
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -28,13 +35,15 @@
     <link rel="stylesheet" type="text/css" href="css/doimatkhau.css">
     <!-- Latest compiled and minified JavaScript --> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ek+Mukta">
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ek+Mukta"> 
     <link href="css/index.css" rel="stylesheet" type="text/css" />
+     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script src="js/myscript.js"></script>
     <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    
 </head>
 <body style="margin: 0px;padding: 0px;">
 <div class="container" style="margin: 0px;padding: 0px; width: 100%;height: 100%;"> 
@@ -42,17 +51,8 @@
      <div class="col-md-6" style="margin: 0px;padding: 0px;">
       <a href="https://www.utc.edu.vn/"><img src="images/utc_title.PNG" alt="" width="100%" height="100%"></a>
      </div>
-     <div class="col-md-1" style="padding-top: 80px;height: 50px;">
-      <!--
-      <select class="list-group" style="height: 33px;" size="5" name="loai[]">
-           <option value="0">Loại tìm kiếm</option>
-           <option value="Thuoc">Thuốc</option>
-           <option value="NhanVien">Nhân viên</option>
-           <option value="NhaSanXuat">Nhà sản xuất</option>
-           <option value="NhaCungCap">Nhà cung cấp</option>
-       </select>-->
-     </div>
-    <div class="col-md-3" style="padding-top: 80px;">
+     
+    <div class="col-md-2" style="padding-top: 80px;">
     
         <div class="row">
             <form method="get" asp-action="Index">
@@ -60,13 +60,37 @@
                 <div class="col-lg-4" style="height: 50px;"> <input formaction="" type="submit" onclick="searchthuoc()" id="btn_search" value="Search" class="btn btn-success" style="height: 34px;"></div>
             </form>
         </div>
-     </div>
+     </div> 
 
      <div class="col-md-2" style="padding-top: 90px;font-size: 15px;font-weight: bold;">
        <a href="dangnhap.php"><i class="fas fa-sign-out-alt"></i>  Đăng xuất   |</a>
         
       <a href="https://www.utc.edu.vn/"><i class="fas fa-phone-alt"></i>Liên hệ   </a> 
      </div>
+
+     <div class="col-md-1" style="padding-top: 60px;height: 50px;">
+      <a href="index.php?detail=thongtinnv">
+     <img id="profile-img" class="profile-img-card" src="images/<?php
+                        require_once 'ketnoi_pdo.php';
+                        $nsx = db()->query("SELECT * FROM NhanVien Where MaNV='".$_SESSION["name"]."' ");
+                        while($row = $nsx->fetch()){
+                          echo $row['HinhAnh'];
+                        }
+                  ?>" style="width: 50px;height: 50px;" />
+     </a>
+     </div>
+     
+     <div class="col-md-1" style="padding-top: 80px;height: 50px;color: red; font-weight: bold; font-style: in">
+      <?php
+          require_once 'ketnoi_pdo.php';
+          $nsx = db()->query("SELECT * FROM NhanVien Where MaNV='".$_SESSION["name"]."' ");
+          while($row = $nsx->fetch()){
+            echo $row['TenNV'];
+          }
+      ?>
+    
+     </div>
+
  </div>
  <!--
 <marquee behavior="alternate" id="marq" scrollamount="4" direction="left" loop="50" scrolldelay="0" onmouseover="this.stop()" onmouseout="this.start()">
@@ -91,7 +115,7 @@
          </ul> 
      </li> 
      <li><a><i class="far fa-keyboard"></i>    Quản lý thuốc</a> 
-           <ul> 
+           <ul> <li><a href="index.php"><i class="fas fa-plus"></i>Danh sách thuốc</a></li>
                <li><a href="them_thuoc.php"><i class="fas fa-plus"></i>  Thêm thuốc</a></li> 
                <li><a href="them_hoadonnhap.php"><i class="fas fa-plus"></i>  Nhập Thuốc</a> </li> 
                <li><a href="index.php?detail=dshdb"><i class="fas fa-plus"></i>  Bán thuốc</a></li> 
@@ -111,9 +135,21 @@
       </li> 
       <li><a><i class="far fa-id-card"></i>    Thống kê</a> 
             <ul> 
-                <li><a href="http://hocwebgiare.com/"><i class="fas fa-plus"></i>  Báo cáo hàng ngày</a></li> 
-                <li><a href="http://hocwebgiare.com/"><i class="fas fa-plus"></i>  Thống kê thuốc</a></li> 
-            </ul>
+                <li><a href="index.php?detail=thongke"><i class="fas fa-plus"></i>  Thống kê thuốc</a></li> 
+                <li><a href="xuat_excel_ngay.php" onclick="thongke()"><i class="fas fa-plus" ></i>  Báo cáo theo ngày</a></li> 
+                <script type="text/javascript">
+                  function thongke()
+                 {
+                    
+                   var x=<?php require_once'phanquyen.php';echo(ketqua($_SESSION['name'])); ?>;
+                  if(x=="1"){
+                      alert("Xuất báo cáo thành công");
+                  }else{
+                      alert("Bạn không phải là giám đốc");
+                  }
+                 }                 
+                </script>
+            </ul> 
       </li> 
        </ul>
         </nav> 
@@ -143,6 +179,8 @@
           require_once('ds_hdb.php');
         }elseif ($_GET["detail"]=="chucvu") {
           require_once('ds_chucvu.php');
+        }elseif ($_GET["detail"]=="thongke") {
+          require_once('thongkethuoc2.php');
         }else{
           require_once('ctthuoc.php');
         }
@@ -152,7 +190,11 @@
            require_once('chitiet_nv.php');
         }
         else{
+          if(isset($_GET["trang"])){
+            require_once('thongkethuoc2.php');
+          }else{
             require_once('ds_thuoc.php');
+          }
         }
       ?>
   </div>  

@@ -9,7 +9,7 @@
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
      <link rel="stylesheet" type="text/css" href="css/dangnhap.css">
 </head>
-<body>
+<body> 
     <div class="container">
         <?php
             session_start(); 

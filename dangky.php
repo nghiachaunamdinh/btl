@@ -8,6 +8,7 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
      <link rel="stylesheet" type="text/css" href="css/dangnhap.css">
+      <link rel="shortcut icon" type="text/css" href="images/logo_utc.jpg">
 </head>
 <body>
     <div class="container">
@@ -18,17 +19,20 @@
               $conn = mysqli_connect("localhost", "root", "", "qlst");
               mysqli_set_charset($conn, "utf8");
               $test="";
+              $msv="";
               $re = mysqli_query($conn, "SELECT * FROM NhanVien");
               while($row = mysqli_fetch_assoc($re)){
-                  if($_POST['manv']==$row['MaNV']){
+                  if($_POST['manv']==$row['Email']){
+                    $msv=$row['MaNV'];
                     require_once 'ketnoi_pdo.php';
                     if(taikhoan($_POST['manv'])=="false"){
                         if($_POST['matkhau1']==$_POST['matkhau2']){
                           require_once 'ketnoi_pdo.php';
                           try{
-                              insert($_POST['manv'],$_POST['tendangnhap'],$_POST['matkhau1']);    
-                              header("Location:dangnhap.php");
-                              $r= "Đăng ký thành công.";
+
+                              insert($msv,$_POST['tendangnhap'],$_POST['matkhau1']); 
+
+                              header("Location:sms2.php?manv=".$msv."& sdt=".$row['SDT']);
                              } catch(PDOException $e){
                               //die("ERROR: Không thể thực thi truy $sql. " . $e->getMessage());
                               $r="Đăng ký không thành công";
@@ -45,7 +49,7 @@
                   }
               }
               if($test==""){
-                   $r ="Không tồn tại mã nhân viên trong danh sách";
+                   $r ="Không tồn tại nhân viên trong danh sách.Kiểm tra Email";
             }
 }else{
                 $r="Nhập thông tin đăng ký .";
@@ -58,7 +62,7 @@
             <form class="form-signin" method="POST" action="dangky.php">
                  <span id="reauth-email" class="reauth-email"></span>
                 <p ></p>
-                <input type="text"  class="form-control" placeholder="Mã nhân viên" name="manv" required>
+                <input type="Email"  class="form-control" placeholder="Email" name="manv" required>
                 <br>
                 <p></p>
                 <input type="text"  class="form-control" placeholder="Tên đăng nhập" name="tendangnhap" required>

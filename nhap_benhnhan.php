@@ -23,8 +23,10 @@
                         insertBN($_POST['tenbn'],$_POST['sdt'],$_POST['socmt'],$_POST['diachi']);  
                         $ma=selectmax('BenhNhan','MaBN');  
                         $_SESSION['mabn']=$ma;
-                         insertHDB($ma,$_SESSION["name"]);
-                        $_SESSION['mahdb']=selectmax('HoaDonBan','MaHDB');
+                        date_default_timezone_set('UTC');
+                        $date=date('Y/m/d H:i:s');
+                         insertHDB($ma,$_SESSION["name"],$date); 
+                        $_SESSION['mahdb']=selectmax('HoaDonBan','MaHDB'); 
                         header('Location:index.php');
                         $r= "Đăng ký thành công.";
                     }catch(PDOException $e){

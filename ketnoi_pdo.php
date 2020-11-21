@@ -265,7 +265,7 @@ function deleteNCC($cv,$t){
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM ".$cv." WHERE MaNCC='".$t."'";
     $stmt= $connect->prepare($sql);
-    $stmt->execute();
+    $stmt->execute(); 
 }
 //update nhà cung cấp
 function UpdateNCC($manv,$ten,$diachi,$sdt){
@@ -285,12 +285,12 @@ function insertNCC($MaNV,$TenDangNhap,$MatKhau){
     $stmt->execute([$MaNV, $TenDangNhap,$MatKhau]);
 }
 //INSERT nhan vien
-function insertNhanVien($Ten,$sdt,$cmt,$diachi,$ghichu,$HinhAn,$cv,$t){
+function insertNhanVien($sdt,$cmt,$diachi,$ghichu,$HinhAn,$cv,$t){
     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO NhanVien (MaNV,TenNV,Email,DiaChi,SDT,SoCMT,HinhAnh,MaCV) VALUES (?,?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO NhanVien (TenNV,Email,DiaChi,SDT,SoCMT,HinhAnh,MaCV) VALUES (?,?,?,?,?,?,?)";
     $stmt= $connect->prepare($sql);
-    $stmt->execute([$Ten,$sdt,$cmt,$diachi,$ghichu,$HinhAn,$cv,$t]);
+    $stmt->execute([$sdt,$cmt,$diachi,$ghichu,$HinhAn,$cv,$t]);
 }
 //delete nhan viên
 function delete($cv,$t){
@@ -311,13 +311,13 @@ function UpdateNhanVien($manv,$sdt,$cmt,$diachi,$ghichu,$HinhAn,$cv,$t){
 }
 
 //thêm hóa đơn bán
-function insertHDB($Ten,$ghichu){
+function insertHDB($Ten,$ghichu,$date){
     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //Câu truy vấn
-    $sql = "INSERT INTO HoaDonBan (MaBN,MaNV) VALUES (?,?)";
+    $sql = "INSERT INTO HoaDonBan (MaBN,MaNV,ThoiGian) VALUES (?,?,?)";
     $stmt= $connect->prepare($sql);
-    $stmt->execute([$Ten,$ghichu]);
+    $stmt->execute([$Ten,$ghichu,$date]);
 }
 //test Email
 function testEmail($email){
@@ -376,7 +376,7 @@ function deleteThuoc($t){
     //Câu truy vấn
     $sql = "INSERT INTO ChiTietHoaDonBan (MaHDB,MaThuoc,ThoiGian,SoLuong) VALUES (?,?,?,?)";
     $stmt= $connect->prepare($sql);
-    $stmt->execute([$MaHDB,$MaThuoc,$date,$SoLuong]);
+    $stmt->execute([$MaHDB,$MaThuoc,$date,$SoLuong]);///////
  }
  //tính tông tiền của hóa đơn
  function sumCTHDB($MaHDB)
@@ -392,6 +392,7 @@ function deleteThuoc($t){
    }
    return $sum;
  }
+ 
  //TÌM GIÁ BÁN
 function giaban($MaHDB)
  {
@@ -430,23 +431,25 @@ function countCTHDB($MaHDB)
     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM HoaDonBan WHERE MaHDB='".$t."'";
-    $stmt= $connect->prepare($sql);
+    $stmt= $connect->prepare($sql); 
     $stmt->execute();
 }
 //kiểm tra tồn tại mã thuốc trong ds mua hay chưa
-function testThuocCTHDB($MaThuoc)
+function testThuocCTHDB($MaThuoc,$mahdb)
  {
     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM ChiTietHoaDonBan where MaThuoc='".$MaThuoc."'");
     $sum=0;
     while($row = $result->fetch()) {
-        $sum++;
+        if($row['MaThuoc']==$MaThuoc && $row['MaHDB']==$mahdb){
+            $sum=$sum+1;
+        }
     }
     if($sum==0){
-        return true;
-    }else{
-        return false;
+        return 'true';
+    }else{ 
+        return 'false';
     }
  }
  //trả về số lượng 1 sản phẩm trong dsmua
@@ -457,6 +460,17 @@ function testThuocCTHDB($MaThuoc)
     $t="";
     while($row = $result->fetch()) {
        $t= $row['SoLuong'];
+    }
+    return $t;
+}
+//trả về số lượng sản phẩm trong dsmua
+ function slthuoctrongdsmua($mahdb){ 
+  $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM ChiTietHoaDonBan where MaHDB = '".$mahdb."'");
+    $t=0;
+    while($row = $result->fetch()) {
+       $t += 1;
     }
     return $t;
 }

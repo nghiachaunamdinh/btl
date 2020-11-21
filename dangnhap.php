@@ -3,6 +3,9 @@
    session_start();
     require_once 'ketnoi_pdo.php';
     $r="Mật khẩu hoặc tên đăng nhập không đúng .";
+    if(isset($_SESSION["name"])){ 
+         unset($_SESSION['name']);
+    } 
     if(isset($_POST['submit'])){
         $name=$_POST['tendangnhap'];
         $pass=$_POST['matkhau'];
@@ -22,13 +25,14 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Trang HTML5</title>
+    <title>Đăng nhập tài khoản</title>
     <meta charset="UTF-8">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/dangnhap.css">
-    
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+     <link rel="shortcut icon" type="text/css" href="images/logo_utc.jpg">
 </head>
 <body>
     <div class="container">

@@ -1,9 +1,9 @@
 <div class="row">
     <?php
     require ("test_data.php");
-    $sosp=!empty($_GET["sosp"])?$_GET["sosp"]:6;
+    $sosp=!empty($_GET["sosp"])?$_GET["sosp"]:6;//số sp 1 trang
     $trang=!empty($_GET["name"])?$_GET["name"]:1;
-    $offset=($trang-1)*$sosp;
+    $offset=($trang-1)*$sosp;//vị trí bắt đầu của trang sp
     $conn = mysqli_connect("localhost", "root", "", "qlst");
      mysqli_set_charset($conn, "utf8");
     $result = mysqli_query($conn, "SELECT * FROM Thuoc where TenThuoc like '%".$_GET["Empsearch"]."%' limit ".$sosp." offset ".$offset);
@@ -20,8 +20,19 @@
             <div class="detail">
             <p><?php echo $row['GhiChu'] ?></p>
             <img src="images/<?php echo $row['HinhAnh'] ?>" alt="dsadas" style="height: 200px;width: 200px;"/>
-        <a href="#" class="btn btn-info">Thêm</a>
-        <a href="?detail=<?php echo $row['MaThuoc'] ?>" class="btn btn-info">Chi tiết</a>
+             <form action="data_class.php?mathuoc=<?php echo $row['MaThuoc']; ?>" method="POST">
+                <button type="submit" class="btn btn-info" onclick="themthuoc()" formaction="data_class.php?mathuoc=<?php echo $row['MaThuoc']; ?>" name="them<?php echo $row['MaThuoc']; ?>" >Thêm</button>
+                <script type="text/javascript">
+                 function themthuoc() {
+                    var x="";
+                    x=<?php echo empty($_SESSION['mahdb']); ?>;
+                    if(x=='1'){
+                        alert("Bạn hãy điền thông tin bệnh nhân trước khi thêm .");
+                    }
+                }   
+                </script>
+                <a href="index.php?detail=<?php echo $row['MaThuoc']; ?>" class="btn btn-info"style="padding-top: 15px;">Chi tiết</a>
+            </form>
             </div>
         </div>
         </div>
@@ -42,6 +53,7 @@
         ?>
         <b><?php echo $i ?>     | </b>
     <?php
-        }}
+        }
+    }
     ?>
 </div>

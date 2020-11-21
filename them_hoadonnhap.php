@@ -2,7 +2,7 @@
 
 <!DOCTYPE HTML>
 <html>
-<head>
+<head> 
     <title>Tạo hóa đơn nhập</title> 
     <meta charset="UTF-8">
      <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -23,6 +23,10 @@
                                    $nsx=date_format($nsx,"Y/m/d");
                                    $hsd=date_create($_POST['hsd']);//hạn sử dụng
                                    $hsd=date_format($hsd,"Y/m/d");
+                                   if($_POST['soluong']==""||$_POST['soluong']<1){
+                                      $r="Số lượng phải lớn hon 0 và không được để trống .";
+
+                                  }else{
                                   if(strtotime($nsx)>=strtotime($hsd)){
                                            $r="Ngày sản xuất không được sau  hạn sử dụng";
                                   }else{
@@ -38,6 +42,7 @@
                                        $r="đăng ký không thành công";
                                   }
                                   }
+                                }
           }else{
                 $r="Nhập thông tin hóa đơn .";
           }
@@ -85,20 +90,21 @@
                 <br>
                 <input type="text"  class="form-control" placeholder="Lô thuốc"  name="lothuoc" required>
                 <br>
-                Ngày sản xuất : 
+                NSX : 
                 <input type="date" required name="nsx" id='date' onchange="checkDate();">
                 <br>
-                Hạn sử dụng : 
+                <br>
+                HSD : 
                 <input type="date" required name="hsd" id='date2' onchange="checkDate2();">
                 <br>
-                <p style="color: red;"><?php echo $r ?></p>
+                <p style="color: red;"><?php echo $r; ?></p>
                 <br>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="them" onclick="thongbao();">Thêm hóa đơn nhâp</button>
                 <br>
             </form><!-- /form -->
             <p></p>
           
-            <a href="ds_nhanvien.php" class="forgot-password">
+            <a href="index.php" class="forgot-password">
                  Quay lại
             </a>
         </div>
@@ -159,7 +165,7 @@
              if (x!="") {
                  alert(x);
              }else{
-             	 alert('no');
+             	 alert('Không thành công');
              }
               
         }
