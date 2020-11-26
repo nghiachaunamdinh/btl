@@ -1,5 +1,5 @@
-<?php//Protection proxy
-interface ReadFile {//tạo interface
+<?php
+interface ReadFile {
     public function readFile();
 } 
 // Class User
