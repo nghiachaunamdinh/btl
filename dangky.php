@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="container">
-        <?php
+        <?php 
             session_start();
          if(isset($_POST['dangky'])){
     
@@ -22,25 +22,32 @@
               $msv="";
               $re = mysqli_query($conn, "SELECT * FROM NhanVien");
               while($row = mysqli_fetch_assoc($re)){
-                  if($_POST['manv']==$row['Email']){
+                  if($_POST['email']==$row['Email']){
                     $msv=$row['MaNV'];
                     require_once 'ketnoi_pdo.php';
-                    if(taikhoan($_POST['manv'])=="false"){
+
+                    if(taikhoan($row['MaNV'])=="false"){
+                      if(testtendangnhap($_POST['tendangnhap'])=="false"){
                         if($_POST['matkhau1']==$_POST['matkhau2']){
                           require_once 'ketnoi_pdo.php';
                           try{
-
-                              insert($msv,$_POST['tendangnhap'],$_POST['matkhau1']); 
+                              $mk=base64_encode(stripslashes($_POST['matkhau1']));
+                              insert($msv,$_POST['tendangnhap'],$mk); 
 
                               header("Location:sms2.php?manv=".$msv."& sdt=".$row['SDT']);
                              } catch(PDOException $e){
                               //die("ERROR: Không thể thực thi truy $sql. " . $e->getMessage());
                               $r="Đăng ký không thành công";
                              }
+                    
                       }else{
                          $r="Nhập lại mật khẩu  chưa đúng.";
                       }
                          $test="1";
+                       }else{
+                          $r="Tên đăng nhập đã tồn tại.";
+                       }
+                       $test="1";
                     }else{
                     $test="1";
                     $r="Tài khoản đã tồn tại.";
@@ -62,7 +69,7 @@
             <form class="form-signin" method="POST" action="dangky.php">
                  <span id="reauth-email" class="reauth-email"></span>
                 <p ></p>
-                <input type="Email"  class="form-control" placeholder="Email" name="manv" required>
+                <input type="Email"  class="form-control" placeholder="Email" name="email" required>
                 <br>
                 <p></p>
                 <input type="text"  class="form-control" placeholder="Tên đăng nhập" name="tendangnhap" required>

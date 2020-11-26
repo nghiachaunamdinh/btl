@@ -1,5 +1,5 @@
 <?php  
-
+if($_GET['cv']=='1'){
  $conn = mysqli_connect("localhost", "root", "", "qlst");
      mysqli_set_charset($conn, "utf8");
     $result = mysqli_query($conn, "SELECT * FROM HoaDonBan");
@@ -11,6 +11,7 @@
         $tiem=date_format($tiem,"Y/m/d");//chuyển về ngày tháng năm
         if(strtotime($date) == strtotime($tiem)){
            $user = 'root';
+}
 $password = '';
 $server = 'localhost'; 
 $database = 'qlst';
@@ -97,6 +98,8 @@ if(!empty($rows)){
    
          }
   }
+}else{
+  header("Location:index.php");
 }
 //date_default_timezone_set('Asia/Ho_Chi_Minh');
 //$date = getdate();

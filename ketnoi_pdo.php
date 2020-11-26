@@ -89,6 +89,18 @@ function taikhoan($s){
     }
     return 'false';
 }
+//kiểm tra tồn tại ten dang nhap ko
+function testtendangnhap($s){
+     $conn = mysqli_connect("localhost", "root", "", "qlst");
+     mysqli_set_charset($conn, "utf8");
+    $result = mysqli_query($conn, "SELECT * FROM DangNhap");
+    while($row = mysqli_fetch_assoc($result)){
+        if($row["TenDangNhap"]==$s){
+            return 'true';
+        }
+    }
+    return 'false';
+}
 //kiểm tra số điện thoại
 function testsdt($s){
     $s=$s."";
@@ -244,12 +256,12 @@ function UpdateNT($manv,$ten,$diachi){
    $stmt->execute();
 }
 //insert  bệnh nhân
-function insertBN($Ten,$sdt,$cmt,$diachi){
+function insertBN($Ten,$sdt){
      $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql = "INSERT INTO BenhNhan (TenBN,SDT,SoCMT,DiaChi) VALUES (?,?,?,?)";
+    $sql = "INSERT INTO BenhNhan (TenBN,SDT) VALUES (?,?)";
     $stmt= $connect->prepare($sql);
-    $stmt->execute([$Ten, $sdt,$cmt,$diachi]);
+    $stmt->execute([$Ten, $sdt]);
 }
 //update benh nhân
 function Updatebenhnhan($manv,$sdt,$cmt,$diachi,$ghichu){
@@ -505,5 +517,18 @@ function UpdateTinhtrangCTHDB($mahdb){
    $stmt = $connect->prepare($sql);
    $stmt->execute();
 }
-
+//kiểm tra tồn tại tài khoản
+function testdangky($madn){
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM DangNhap ");
+    $t=0;
+    while($row = $result->fetch()) {
+       if($row['TenDangNhap']==$madn)
+       {
+        return true;
+       }
+    }
+    return false;
+}
 ?>

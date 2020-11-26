@@ -22,11 +22,8 @@ if( testThuocCTHDB($_GET["mathuoc"],$_SESSION['mahdb'])=="true"){
     header("Location:index.php"); 
 
 }
-}else{ 
-        echo "<script language='javascript'>"; 
-        echo "alert('Sản phẩm đã hết.Vui lòng chọn sản phẩm khác')"; 
-        echo "</script>";
-        header("Location:index.php"); 
+}else{   
+    header("Location:index.php"); 
 }
     
  ?> 

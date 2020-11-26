@@ -6,12 +6,20 @@
     if(isset($_SESSION["name"])){ 
          unset($_SESSION['name']);
     } 
+    if(isset($_SESSION['mahdb'])){ 
+         unset($_SESSION['mahdb']);
+    } 
+    if(isset($_SESSION['mabn'])){ 
+         unset($_SESSION['mabn']);
+    } 
+    
     if(isset($_POST['submit'])){
         $name=$_POST['tendangnhap'];
         $pass=$_POST['matkhau'];
         $result = db()->query("SELECT * FROM DangNhap");
         while($row = $result->fetch()) {
-            if($name==$row['TenDangNhap'] && $pass==$row['MatKhau']){
+            $ketqua=base64_decode($row['MatKhau']);
+            if($name==$row['TenDangNhap'] && $pass==$ketqua){
                 header('Location:index.php'); 
                 $r="";
                 $_SESSION['name']=$row['MaNV'];

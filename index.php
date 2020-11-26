@@ -16,9 +16,12 @@
     if(isset($_POST['thanhtoan'])){
     require_once 'ketnoi_pdo.php';
         if(slthuoctrongdsmua($_SESSION['mahdb'])>0){
-            header("Location:xuat_excel.php?mahdb=".$_SESSION['mahdb']);
+            //header("Location:xuat_excel.php?mahdb=".$_SESSION['mahdb']);
+          unset($_SESSION['mabn']);
+          unset($_SESSION['mahdb']);
         } 
     }
+    
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -136,8 +139,18 @@
       <li><a><i class="far fa-id-card"></i>    Thống kê</a> 
             <ul> 
                 <li><a href="index.php?detail=thongke"><i class="fas fa-plus"></i>  Thống kê thuốc</a></li> 
-                <li><a href="xuat_excel_ngay.php" onclick="thongke()"><i class="fas fa-plus" ></i>  Báo cáo theo ngày</a></li> 
+                <li><a href="xuat_excel_ngay.php?cv=<?php require_once'phanquyen.php'; echo ketqua($_SESSION['name']); ?>" onclick="thongke()"><i class="fas fa-plus" ></i>  Báo cáo theo ngày</a></li> 
                 <script type="text/javascript">
+                  function themnv()
+                 {
+                    
+                   var x=<?php require_once'phanquyen.php';echo(ketqua($_SESSION['name'])); ?>;
+                  if(x=="1"){
+                      alert("Bạn đủ quyền thêm nhân viên");
+                  }else{
+                      alert("Bạn không phải là giám đốc");
+                  }
+                 }            
                   function thongke()
                  {
                     
@@ -151,7 +164,7 @@
                 </script>
             </ul> 
       </li> 
-       </ul>
+       </ul> 
         </nav> 
   </div> 
   <div class="col-md-6" style="margin: 0px;padding: 0px;">  
@@ -160,7 +173,16 @@
         if($_GET["detail"]=="thongtinnv"){
           require_once('thongtinnv.php');
         }elseif ($_GET["detail"]=="nhanvien") {
-         require_once('ds_nhanvien.php');
+          require_once'phanquyen.php';
+          if(ketqua($_SESSION['name'])==1){
+            require_once('ds_nhanvien.php');
+          }else{
+          echo '<script language="javascript">'; 
+           echo 'alert("Giam đốc mới được thêm nhân viên.")'; 
+           echo '</script>'; 
+           require_once('ds_thuoc.php');
+          }
+
         }elseif ($_GET["detail"]=="benhnhan") {
          require_once('ds_benhnhan.php');
         }elseif ($_GET["detail"]=="chitietnv") {
@@ -170,7 +192,7 @@
         }elseif ($_GET["detail"]=="nhomthuoc") {
           require_once('ds_nhomthuoc.php');
         }elseif ($_GET["detail"]=="donvithuoc") {
-          require_once('ds_donvithuoc.php');
+          require_once('ds_donvithuoc.php'); 
         }elseif ($_GET["detail"]=="nhasanxuat") {
           require_once('ds_nhasanxuat.php');
         }elseif ($_GET["detail"]=="dshuy") {

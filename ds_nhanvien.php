@@ -1,5 +1,5 @@
 <?php 
-    require_once 'ketnoi_pdo.php';
+    require_once 'ketnoi_pdo.php'; 
     $result = db()->query("SELECT * FROM NhanVien");
 ?>
 <h2 align="center" style="color:red;font-weight: bold;">Danh sách nhân viên</h2>

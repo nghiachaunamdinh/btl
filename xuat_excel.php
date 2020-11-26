@@ -89,5 +89,7 @@ if(!empty($rows)){
     echo "\nTong : \t".number_format(sumCTHDB($_GET['mahdb']));
   
 }
-
+session_start();
+unset($_SESSION['mabn']);
+unset($_SESSION['mahdb']);
 ?>

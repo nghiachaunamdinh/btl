@@ -20,7 +20,7 @@
             if(testsdt($sdt)){
                  if(testsocmt($_POST['socmt'])==true){
             	    try{
-                        insertBN($_POST['tenbn'],$_POST['sdt'],$_POST['socmt'],$_POST['diachi']);  
+                        insertBN($_POST['tenbn'],$_POST['sdt']);  
                         $ma=selectmax('BenhNhan','MaBN');  
                         $_SESSION['mabn']=$ma;
                         date_default_timezone_set('UTC');
@@ -51,10 +51,6 @@
     			<input type="text"  class="form-control" placeholder="Tên bệnh nhân" required autofocus name="tenbn" id="namekh">
     			<br>
     			<input type="text"  class="form-control" placeholder="SDT" required autofocus name="sdt">
-    			<br>
-    			<input type="text"  class="form-control" placeholder="Số CMT"  required name="socmt">
-    			<br>
-    			<input type="text"  class="form-control" placeholder="Địa chỉ" required name="diachi">
     			
     			<br>
     			<button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="submitbn" onclick="">Đăng ký</button>

@@ -98,12 +98,15 @@
         function thanhtoan(){
            var x=<?php echo slthuoctrongdsmua($_SESSION['mahdb']);?>;
            if(x=="0"){
+             var x  require_once 'ketnoi_pdo.php';
             alert("Hãy thêm sản phẩm để thanh toán");
+           }else{
+              alert("Thanh toán thành công");
            }
         }
         
       </script>
-      <td colspan="2"><button type="submit" class="btn btn-primary" style="height: 30px; width: 90px;" id="thanhtoan" name="thanhtoan" onclick="var x=<?php echo slthuoctrongdsmua($_SESSION['mahdb']);?>;if(x=='0'){alert('Không có sản phẩm nào để thanh toán');}" >Thanh Toán </button> </td>
+      <td colspan="2"><button type="submit" class="btn btn-primary" style="height: 30px; width: 90px;" id="thanhtoan" name="thanhtoan" onclick="var x=<?php echo slthuoctrongdsmua($_SESSION['mahdb']);?>;if(x=='0'){alert('Không có sản phẩm nào để thanh toán');}else alert('Thanh toán thành công'); ">Thanh Toán </button> </td>
       <td><button type="button" class="btn btn-success" style="height: 30px;width: 50px; background-color: #ff4d4d;" id="sua"  name="sua" onclick="suads()">Sửa</button> </td>
       
       <td><button type="submit" class="btn btn-success" style="height: 30px;width: 50px; background-color: green;" id="luu" onclick=";" name="btnluu" disabled>Lưu</button> </td>

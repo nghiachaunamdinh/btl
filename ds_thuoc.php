@@ -36,11 +36,13 @@
     $offset=($trang-1)*$sosp;
     $conn = mysqli_connect("localhost", "root", "", "qlst");
      mysqli_set_charset($conn, "utf8");
-    $result = mysqli_query($conn, "SELECT * FROM Thuoc limit ".$sosp." offset ".$offset);
+    $result = mysqli_query($conn, "SELECT * FROM Thuoc limit ".$sosp." offset ".$offset); 
     $r = mysqli_query($conn, "SELECT * FROM Thuoc");
     $s=$r->num_rows;
     $t=ceil($s/$sosp);//làm tròn tổng số sản phẩm 
+    $dem=0;
     while($row = mysqli_fetch_assoc($result)){ 
+        $dem=$dem+1;
     ?>
         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
         <div class="my-list">
@@ -52,13 +54,19 @@
             <img src="images/<?php echo $row['HinhAnh'] ?>" alt="dsadas" style="height: 200px;width: 200px;"/>
 
             
-                <a class="btn btn-info" onclick="themthuoc()" href="data_class.php?mathuoc=<?php echo $row['MaThuoc']; ?>" name="them<?php echo $row['MaThuoc']; ?>" >Thêm</a>
+                <a class="btn btn-info" onclick="themthuoc<?php echo $dem; ?>()" href="data_class.php?mathuoc=<?php echo $row['MaThuoc']; ?>" name="them<?php echo $row['MaThuoc']; ?>" >Thêm</a>
                 <script type="text/javascript">
-                 function themthuoc() {
+                 function themthuoc<?php echo $dem; ?>() {
                     var x='';
                     x='<?php echo empty($_SESSION['mahdb']); ?>';
+
                     if(x=='1'){
-                        alert("Bạn hãy điền thông tin bệnh nhân trước khi thêm .");
+
+                        alert("Hãy điền thông tin bệnh nhân trước khi thêm thuốc .");
+                    }else{
+                        if( '<?php echo slnhap($row['MaThuoc']);?>' <= '<?php echo slban($row['MaThuoc']); ?>' ){
+                             alert("Thuốc đã hết");
+                        }
                     }
                 }   
                 </script>
