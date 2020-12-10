@@ -1,5 +1,5 @@
 <?php
-
+ 
    session_start();
     require_once 'ketnoi_pdo.php';
     $r="Mật khẩu hoặc tên đăng nhập không đúng .";
@@ -18,8 +18,9 @@
         $pass=$_POST['matkhau'];
         $result = db()->query("SELECT * FROM DangNhap");
         while($row = $result->fetch()) {
-            $ketqua=base64_decode($row['MatKhau']);
-            if($name==$row['TenDangNhap'] && $pass==$ketqua){
+            $ketqua=base64_encode(stripslashes($pass));
+            //base64_decode(stripslashes($row['MatKhau']));
+            if($name==$row['TenDangNhap'] && $row['MatKhau']==$ketqua){
                 header('Location:index.php'); 
                 $r="";
                 $_SESSION['name']=$row['MaNV'];
