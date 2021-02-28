@@ -53,8 +53,8 @@
  <div class="row" style="margin: 0px;padding: 0px;width: 100%;height: 100%;">
      <div class="col-md-6" style="margin: 0px;padding: 0px;">
       <a href="https://www.utc.edu.vn/"><img src="images/utc_title.PNG" alt="" width="100%" height="100%"></a>
-     </div>
-     
+      <i class="fas fa-bars show_menu" style="font-size: 25px;" onclick="menu_show()"></i>
+    </div>
     <div class="col-md-2" style="padding-top: 80px;">
     
         <div class="row">
@@ -102,12 +102,11 @@
 <a href="Link"><img src="images/v03.png" title="" width="500" height="150" style="border-right: 1px #b3d9ff solid;"/> </a>
 <a href="Link"><img src="images/v04.jpg" title="" width="500" height="150"/> </a>
 </marquee>-->
-
 <hr style="border: 1px #b3d9ff solid;">
 
 
  <div class="row" style="margin: 0px;padding: 0px;"> 
-
+<!--
   <div class="col-md-2" style="margin: 0px;padding: 0px;">  
    <nav class="mainNav" style="margin: 0px;padding: 0px;"> 
     <ul> 
@@ -165,8 +164,9 @@
             </ul> 
       </li> 
        </ul> 
-        </nav> 
+    </nav> 
   </div> 
+-->
   <div class="col-md-6" style="margin: 0px;padding: 0px;">  
       <?php
       if(isset($_GET["detail"])){
@@ -220,7 +220,7 @@
         }
       ?>
   </div>  
-  <div class="col-md-4" style="height: 600px;border-left: 2px solid #99ccff; margin: 0px;padding: 0px;">
+  <div class="col-md-6" style="height: 600px;border-left: 2px solid #99ccff; margin: 0px;padding: 0px;">
           <?php
               if(empty($_SESSION['mabn'])){
           ?>
@@ -253,5 +253,200 @@
       </div>
 </div> 
 
+
+
+<div id="nav_overlay" onclick="nav_overlay_check()"></div>
+
+
+<nav class="nav" id="nav" style="margin: 0px;padding: 0px;"> 
+    <ul>
+      <li><i class="fas fa-times" style="font-size: 25px;color: black;padding-left: 150px" onclick="menu_dis()"></i></li>
+     <li class="selected" style="margin: 0px;padding: 0px;"><a href=""><i class="fas fa-user"></i>Tài khoản</a> 
+         <ul>
+    
+             <li><a href="index.php?detail=thongtinnv"><i class="fas fa-plus"></i>  Thông tin tài khoản</a></li> 
+             <li><a href="doimatkhau.php"><i class="fas fa-plus"></i>  Đổi mật khẩu</a></li> 
+         </ul> 
+     </li> 
+     <li><a><i class="far fa-keyboard"></i>    Quản lý thuốc</a> 
+           <ul> <li><a href="index.php"><i class="fas fa-plus"></i>Danh sách thuốc</a></li>
+               <li><a href="them_thuoc.php"><i class="fas fa-plus"></i>  Thêm thuốc</a></li> 
+               <li><a href="them_hoadonnhap.php"><i class="fas fa-plus"></i>  Nhập Thuốc</a> </li> 
+               <li><a href="index.php?detail=dshdb"><i class="fas fa-plus"></i>  Bán thuốc</a></li> 
+               <li><a href="index.php?detail=dshuy"><i class="fas fa-plus"></i>  Hủy thuốc</a></li> 
+          </ul> 
+     </li> 
+     <li><a href="http://hocwebgiare.com/"><i class="fas fa-paperclip"></i>    Quản lý danh mục</a> 
+          <ul> 
+               <li><a href="index.php?detail=nhacungcap"><i class="fas fa-plus"></i>  Nhà cung cấp</a></li> 
+               <li><a href="index.php?detail=benhnhan"><i class="fas fa-plus"></i>  Bệnh nhân</a></li> 
+               <li><a href="index.php?detail=nhanvien"><i class="fas fa-plus"></i>  Nhân viên</a></li>  
+               <li><a href="index.php?detail=nhomthuoc"><i class="fas fa-plus"></i>  Nhóm thuốc</a></li> 
+               <li><a href="index.php?detail=donvithuoc"><i class="fas fa-plus"></i>  Đơn vị tính</a></li>
+               <li><a href="index.php?detail=nhasanxuat"><i class="fas fa-plus"></i>  Nhà sản xuất</a></li> 
+               <li><a href="index.php?detail=chucvu"><i class="fas fa-plus"></i>  Chức vụ</a></li> 
+          </ul>  
+      </li> 
+      <li><a><i class="far fa-id-card"></i>    Thống kê</a> 
+            <ul> 
+                <li><a href="index.php?detail=thongke"><i class="fas fa-plus"></i>  Thống kê thuốc</a></li> 
+                <li><a href="xuat_excel_ngay.php?cv=<?php require_once'phanquyen.php'; echo ketqua($_SESSION['name']); ?>" onclick="thongke()"><i class="fas fa-plus" ></i>  Báo cáo theo ngày</a></li> 
+                <script type="text/javascript">
+                  function menu_show(){
+                    document.getElementById("nav_overlay").style.display="block";
+                    document.getElementById("nav").style.transform="translateX(0%)";
+                  }
+                  function nav_overlay_check(){
+                    document.getElementById("nav_overlay").style.display="none";
+                    document.getElementById("nav").style.transform="translateX(-100%)";
+                  }
+                  function menu_dis(){
+                    document.getElementById("nav_overlay").style.display="none";
+                    document.getElementById("nav").style.transform="translateX(-100%)";
+                  }
+                  function themnv()
+                 {
+                    
+                   var x=<?php require_once'phanquyen.php';echo(ketqua($_SESSION['name'])); ?>;
+                  if(x=="1"){
+                      alert("Bạn đủ quyền thêm nhân viên");
+                  }else{
+                      alert("Bạn không phải là giám đốc");
+                  }
+                 }            
+                  function thongke()
+                 {
+                    
+                   var x=<?php require_once'phanquyen.php';echo(ketqua($_SESSION['name'])); ?>;
+                  if(x=="1"){
+                      alert("Xuất báo cáo thành công");
+                  }else{
+                      alert("Bạn không phải là giám đốc");
+                  }
+                 }                 
+                </script>
+            </ul> 
+      </li> 
+       </ul> 
+</nav> 
+    <style type="text/css">
+        #nav_overlay{
+          display: none;
+          position: fixed;
+          top:0px;
+          bottom: 0px;
+          right: 0px;
+          left: 0px;
+          background-color: rgb(153, 204, 255,0.3);
+        }
+        .nav{
+          transform: translateX(-100%);
+          position: fixed;
+          top: 0px;
+          bottom: 0px;
+          left:0px;
+          background-color: #fff;
+          width: 320px;
+          max-width: 100%;
+        }
+        .nav {  
+width: auto;    
+margin:0px auto;    
+color: #FFF;    
+background-color: #F60;
+}
+.table-dark {
+  color: #fff;
+  background-color: #663300;
+}
+.table-dark th,
+.table-dark td,
+.table-dark thead th {
+ border-color: #FF860D;
+}
+.nav ul {   
+margin: 0;  
+padding: 0; 
+list-style: none;   
+border-bottom-width: 1px;   
+border-bottom-style: solid; 
+border-bottom-color: #999999;
+}
+.nav ul li {    
+border-top-width: 1px;  
+border-top-style: solid;    
+border-top-color: #999999;
+}
+ 
+.nav ul li a {  
+color: #FFF;    
+display: block; 
+font-size: 14px;    
+line-height: normal;    
+padding: 12px 20px; 
+text-decoration: none;  
+font-family:Arial, Helvetica, sans-serif;
+}
+.nav ul li a:hover {    
+font-family:Arial, Helvetica, sans-serif;   
+text-decoration: none;  
+background-color: #F00; 
+color: #FFF;
+}
+ 
+.nav ul ul {    
+border-bottom: none
+}
+ 
+.nav ul ul li { 
+background-color: #F5F5F5;  
+border-top-width: 1px;  
+border-top-style: solid;    
+border-top-color: #E2E2E2;
+}
+.nav ul ul li a {   
+color: #000000; 
+display: block; 
+font-size: 1em; 
+line-height: normal;    
+padding: 0.5em 1em 0.5em 2.5em;
+}
+.nav ul ul li a:hover { 
+background-color: #E9E9E9;  
+color: #FF0000;
+}
+.nav ul ul ul { 
+border-top: 1px solid #46CFB0;
+}
+ 
+.nav ul ul ul li {  
+border: none;
+}
+.nav ul ul ul li a {    
+padding-left: 3.5em;    
+padding-top: 0.25em;    
+padding-bottom: 0.25em;
+}
+ 
+ul li.has-subnav .accordion-btn {   
+color: #fff;    
+font-size: 16px;    
+background-color: #C0C0C0;  
+background-position: 0;
+} 
+ 
+@media screen and (max-width: 1024px) { 
+.nav {width: 100%;
+}
+} 
+ 
+@media screen and (max-width: 700px) { 
+.nav {
+width: 100%;
+}
+}
+        
+</style>
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
 </body>
 </html>

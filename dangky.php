@@ -32,8 +32,9 @@
                           require_once 'ketnoi_pdo.php';
                           try{
                               $mk=base64_encode(stripslashes($_POST['matkhau1']));
-                              insert($msv,$_POST['tendangnhap'],$mk); 
-
+                              $_SESSION['tendangnhap']=$_POST['tendangnhap'];
+                              $_SESSION['matkhau']=$mk;
+                              //insert($msv,$_POST['tendangnhap'],$mk); 
                               header("Location:sms2.php?manv=".$msv."& sdt=".$row['SDT']);
                              } catch(PDOException $e){
                               //die("ERROR: Không thể thực thi truy $sql. " . $e->getMessage());

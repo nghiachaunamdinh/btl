@@ -24,8 +24,8 @@
 		
 	$obj = json_decode($result,true);
     if($obj['CodeResult']==100)
-    {
-        header("Location:nhap_maxndt.php?manv=".$_GET['msv']."& code=".$code);
+    { 
+        header("Location:nhap_maxndt.php?manv=".$_GET['manv']."& code=".$code);
     }
     else
     {

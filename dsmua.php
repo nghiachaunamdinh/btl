@@ -65,9 +65,21 @@
           ?>
             
       </td>
-      <td><input type="text" id="soluong<?php echo $stt;?>" value="<?php echo $row['SoLuong']; ?>" style="width: 30px;" name="soluong<?php echo $stt; ?>" disabled>
+      <td><input type="text" id="soluong<?php echo $stt;?>" value="<?php echo $row['SoLuong']; ?>" style="width: 30px;" name="soluong<?php echo $stt; ?>" disabled onchange="kiemtrasua()" placeholder="hãy nhâpk">
       </td>
-     
+      <script type="text/javascript">
+        function kiemtrasua(){
+          var x=<?php echo slnhap($row['MaThuoc']);?>;
+          var y=<?php echo slban($row['MaThuoc']); ?>;
+          var z=document.getElementById("soluong<?php echo $stt;?>").value;
+          if(x>=(y+z)){
+            alert("Sửa thành công.");
+          }else{
+            alert("Sản phẩm đã hết.");
+            document.getElementById('soluong'+<?php echo $stt;?>).value="1";
+          }
+        }
+      </script>
       <td><input type="text"  style="width: 50px;" onclick="gia()" disabled value="<?php 
             require_once 'ketnoi_pdo.php';
             $nsx = db()->query("SELECT * FROM Thuoc where MaThuoc='".$row["MaThuoc"]."'");
@@ -95,10 +107,11 @@
     </tr>
      <tr>
       <script type="text/javascript">
+       
         function thanhtoan(){
            var x=<?php echo slthuoctrongdsmua($_SESSION['mahdb']);?>;
            if(x=="0"){
-             var x  require_once 'ketnoi_pdo.php';
+            
             alert("Hãy thêm sản phẩm để thanh toán");
            }else{
               alert("Thanh toán thành công");
@@ -138,6 +151,7 @@
 </div>
 <script type="text/javascript">
         function suads() {
+           document.getElementById("thanhtoan").disabled=true;
            var x=<?php echo slthuoctrongdsmua($_SESSION['mahdb']);?>;
            if(x==0){
               alert("Hãy thêm sản phẩm");

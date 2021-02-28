@@ -10,11 +10,16 @@
      <link rel="stylesheet" type="text/css" href="css/dangnhap.css">
 </head>
 <body> 
-    <div class="container">
+    <div class="container"> 
         <?php
             session_start(); 
+
             if(isset($_POST['them'])){
                    if($_POST['email']==$_GET['code']){ 
+                    require_once 'ketnoi_pdo.php';
+                      insert($_GET['manv'],$_SESSION['tendangnhap'],$_SESSION['matkhau']); 
+                      unset($_SESSION['tendangnhap']);
+                      unset($_SESSION['matkhau']);
                       header("Location:dangnhap.php");
                    }else{
                        $r ="Mã SMS không đúng. ";
@@ -25,7 +30,7 @@
             }
          ?>
         <div class="card card-container" style="margin-top: 0px;padding-top: 0px;">
-            <form class="form-signin" method="POST" action="nhap_maxndt.php?code=<?php echo $_GET['code']; ?>">
+            <form class="form-signin" method="POST" action="nhap_maxndt.php?manv=<?php echo $_GET['manv']; ?>&code=<?php echo $_GET['code']; ?>">
               <img id="profile-img" class="profile-img-card" src="images/logo_utc.jpg" />
                 <h2 style="color: blue;font-weight: bold;" align="center">Nhập mã SMS </h2>
               
