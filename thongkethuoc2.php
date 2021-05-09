@@ -1,16 +1,16 @@
-<div class="row">
+<div class="row" style="padding-right: 20px;"> 
     <h2 align="center" style="color:red;font-weight: bold;">Thống kê thuốc</h2>
-    <table class="table table-hover" width="290px;" style="color: red;">
-        <thead>
-            <tr>
-                <th scope="col">STT</th>
-                <th scope="col">Tên thuốc</th>
-                <th scope="col">Nhà sản xuất</th>
-                <th scope="col">Gía bán</th>
-                <th scope="col">Số lượng tồn</th>
+    <table class="table table-hover" width="80%;" style="color: red; font-size: 20px;margin-left: 10px;margin-right: 10px;">
+        <thead >
+            <tr style="color: blue;">
+                <th scope="col" style="color: blue;">STT</th>
+                <th scope="col" style="color: blue;">Tên thuốc</th>
+                <th scope="col" style="color: blue;">Nhà sản xuất</th>
+                <th scope="col" style="color: blue;">Gía bán</th>
+                <th scope="col" style="color: blue;">Số lượng còn</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody style="color: black;">
   
     <?php
      $arrayName = array();
@@ -41,10 +41,12 @@
     for($i=1;$i<=count($arrayName2);$i++){
         $arrayName3[$i]=(int)$arrayName[$i]-(int)$arrayName2[$i];
     } 
+
     $trang=!empty($_GET["trang"])?$_GET["trang"]:1;//vị trí trang hiện tại
     $trangcuoi=floor(count($arrayName2)/10)+1;//trang cuối
     if($trang==$trangcuoi){
         $sosp=count($arrayName2)%10; 
+        $_GET["sothuoc"]=10;
     }else{
        $sosp=!empty($_GET["sothuoc"])?$_GET["sothuoc"]:10; 
     }
@@ -57,16 +59,16 @@
     for($i=$offset+1;$i<= ($offset+$sosp);$i++){
     ?>
 
-            <tr>
-                <th scope="row"><?php echo $i; ?></th>
-                <td><?php require_once 'ketnoi_pdo.php';
+            <tr style="color: black;">
+                <th scope="row" style="color: black;"><?php echo $i; ?></th>
+                <td style="color: black;"><?php require_once 'ketnoi_pdo.php';
                 $nsx = db()->query("SELECT * FROM Thuoc where MaThuoc='".$i."'");
                 while($rows = $nsx->fetch()){
                        echo $rows["TenThuoc"];
                 } 
                 ?>         
                 </td>
-                <td>
+                <td style="color: black;">
                     <?php require_once 'ketnoi_pdo.php';
                     $nsx = db()->query("SELECT  * FROM Thuoc where MaThuoc='".$i."'");
                     while($rows = $nsx->fetch()){
@@ -77,7 +79,7 @@
                     } 
                     ?>
                 </td>
-                <td>
+                <td style="color: black;">
                     <?php require_once 'ketnoi_pdo.php';
                     $nsx = db()->query("SELECT * FROM Thuoc where MaThuoc='".$i."'");
                     while($rows = $nsx->fetch()){
@@ -86,7 +88,7 @@
                     ?>
                 </td>
           
-                <td>
+                <td style="color: black;">
                      <?php echo $arrayName3[$i];?>
                 </td>
             </tr>
@@ -104,14 +106,19 @@ tr {
 </div>
 <div align="center" style="font-size: 20px,font-weight: bold;">
     <?php 
+    $sosp=10;
+     if($trang==$trangcuoi){
+        $t=ceil($s/$sosp);// tính tổng số trang
+     }
+    
     for($i=1;$i<=$t;$i++){
         if($trang!=$i){
     ?>
-    <a class="page-item" href="?trang=<?php echo $i; ?>&sothuoc=<?php echo $sosp; ?>" style="font-size: 20px;font-weight: bold;"><?php echo $i ?>      |   </a>
+    <a class="page-item" href="?trang=<?php echo $i; ?>&sothuoc=<?php echo $sosp; ?>" style="font-size: 20px;font-weight: bold;">|<?php echo $i ?>      |   </a>
     <?php
     }else{
     ?>
-        <b><?php echo $i ?>     | </b>
+        <b>|<?php echo $i ?>     | </b>
     <?php
     }
 }

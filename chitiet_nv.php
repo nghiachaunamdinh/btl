@@ -17,7 +17,7 @@
                 <tbody>
                     <tr>
                         <td>Tên nhân viên : </td>
-                        <td><?php echo $row["TenNV"] ?></td>
+                        <td style="font-weight: 500;color: #212529;"><?php echo $row["TenNV"] ?></td>
                     </tr>
                     <tr>
                         <td>Chức Vụ    : </td>

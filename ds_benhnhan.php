@@ -9,8 +9,6 @@
       <th scope="col">STT</th>
       <th scope="col">Tên bệnh nhân</th>
       <th scope="col">SĐT</th>
-      <th scope="col">Số CMT</th>
-      <th scope="col">Địa chỉ</th>
       <th scope="col">Thay đổi</th>
     </tr>
   </thead>
@@ -24,8 +22,6 @@
       <th scope="row"><?php echo $s; ?></th>
       <td><?php echo $row['TenBN']; ?></td>
       <td><?php echo $row['SDT'];?></td>
-       <td><?php echo$row['SoCMT'];?></td>
-       <td><?php echo$row['DiaChi'];?></td>
       <td>
            <button type="button" class="btn-default"><a href="sua_bn.php?mabn=<?php echo $row['MaBN']; ?>"><i class="fas fa-toolbox"></i>  Sửa</a></button>
       </td>

@@ -17,18 +17,14 @@
                    require_once('ketnoi_pdo.php');
                 
                         if(testsdt($_POST['sdt'])==true){
-                           if(testsocmt($_POST['cmt'])==true){
+                          
                                   try{
-                                       Updatebenhnhan($_GET['mabn'],$_POST['tendangnhap'],$_POST['sdt'],$_POST['cmt'],$_POST['diachi']);
+                                       Updatebenhnhan($_GET['mabn'],$_POST['tendangnhap'],$_POST['sdt']);
                                          $test="ok";
                                          header("Location:index.php?detail=benhnhan");
                                   }catch(PDOException $e){
                                        $r="Sửa không thành công";
                                   }
-
-                           }else{
-                               $r="Số chứng minh thư chỉ chứa số ";
-                            }
                         }else{
                           $r="Số điện thoại chỉ gồm 10 chữ số. ";
                         }
@@ -47,10 +43,7 @@
                 <br>
                 <input type="text"  class="form-control" placeholder="Số điện thoại" name="sdt" required>
                 <br>
-                <input type="text"  class="form-control" placeholder="Số CMT"  name="cmt" required>
-                <br>
-              <input type="text"  class="form-control" placeholder="Địa chỉ"  name="diachi" required>
-                <br>
+                
                 <p style="color: red;"><?php echo $r ?></p>
                 <br>
                 <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" name="sua" onclick="test();">Sửa bệnh nhân</button>

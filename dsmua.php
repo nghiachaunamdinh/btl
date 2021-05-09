@@ -1,5 +1,5 @@
 
-<?php 
+<?php  
    require_once 'PHPExcel-1.8\PHPExcel-1.8\Classes\PHPExcel.php';
    if(isset($_POST['btnluu'])){
     require_once 'ketnoi_pdo.php';
@@ -11,10 +11,10 @@
    
 ?>
 
-<div class="row">
+<div class="row" style="padding-left: 15px;">
   <h2 align="center" style="color: red;font-weight: bold;">Chi tiết hóa đơn bán</h2>
  
-    <table class="table" style="color: #6666ff;" id="dsmuatable">
+    <table class="table" style="color: #6666ff;padding-left: 10px;font-size: 20px;" id="dsmuatable">
   <thead class="thead-dark">
     <tr style="color: #6666ff;">
       <th scope="col" style="color: #6666ff;">STT</th>
@@ -80,7 +80,7 @@
           }
         }
       </script>
-      <td><input type="text"  style="width: 50px;" onclick="gia()" disabled value="<?php 
+      <td><input type="text"  style="width: 100px;" onclick="gia()" disabled value="<?php 
             require_once 'ketnoi_pdo.php';
             $nsx = db()->query("SELECT * FROM Thuoc where MaThuoc='".$row["MaThuoc"]."'");
             while($rows = $nsx->fetch()){
@@ -100,7 +100,7 @@
     ?>
     <tr>
       
-      <td colspan="3">Tổng : </td>
+      <td colspan="3" align="center">Tổng : </td>
       <td style="color: red;font-weight: bold; font-size: 20px;"><?php echo number_format(sumCTHDB($_SESSION['mahdb'])); ?></td>
       <td style="font-weight: bold; font-size: 20px;">Đồng</td>
       <td></td>

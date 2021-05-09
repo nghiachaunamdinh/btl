@@ -1,9 +1,4 @@
-/*--
-Author: W3layouts
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
---*/
+
 html, body{
     font-size: 100%;
 	font-family: 'Open Sans', sans-serif;
@@ -2137,12 +2132,7 @@ p.animi{
 	position: relative;
 	overflow: hidden;
 }
-.wmuSlider .wmuSliderWrapper article img {
-	/*--max-width: 100%;
-	width: auto;
-	height: auto;
-	display:block;--*/
-}
+
 /* Default Skin */
 .wmuSliderPagination {
 	z-index: 2;
@@ -2497,8 +2487,6 @@ td.invert-image a img {
     font-size: 18px;
     color: #fff;
     text-align: center;
-    -webkit-user-select: none;
-    -moz-user-select: none;
 	border:1px solid #b2b2b2;
 	    vertical-align: bottom;
 }
@@ -2788,7 +2776,7 @@ input.checkbox:checked:after {
   margin: 0 0 20px;
   padding: 10px 15px;
   box-sizing: border-box;
-  font-wieght: 400;
+  font-weight: 400;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
   font-size:14px;

@@ -3,7 +3,7 @@
     if(!isset($_SESSION["name"])){
         header("Location:dangnhap.php");
     }  
-    if(isset($_POST['btnhuy'])){
+    if(isset($_POST['btnhuy'])){ 
     require_once 'ketnoi_pdo.php';
 
      $ss=countCTHDB($_SESSION['mahdb']); 
@@ -16,18 +16,18 @@
     if(isset($_POST['thanhtoan'])){
     require_once 'ketnoi_pdo.php';
         if(slthuoctrongdsmua($_SESSION['mahdb'])>0){
-            //header("Location:xuat_excel.php?mahdb=".$_SESSION['mahdb']);
           unset($_SESSION['mabn']);
           unset($_SESSION['mahdb']);
         } 
     }
-    
+     
 ?>
 <!DOCTYPE HTML>
 <html>
 <head>
     <title>Quản lý thuốc UTC</title>
     <meta charset="UTF-8">
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
@@ -39,8 +39,8 @@
     <!-- Latest compiled and minified JavaScript --> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ek+Mukta"> 
-    <link href="css/index.css" rel="stylesheet" type="text/css" />
-     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+    
+    <link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
@@ -51,7 +51,7 @@
 <body style="margin: 0px;padding: 0px;">
 <div class="container" style="margin: 0px;padding: 0px; width: 100%;height: 100%;"> 
  <div class="row" style="margin: 0px;padding: 0px;width: 100%;height: 100%;">
-     <div class="col-md-6" style="margin: 0px;padding: 0px;">
+    <div class="col-md-6" style="margin: 0px;padding: 0px;">
       <a href="https://www.utc.edu.vn/"><img src="images/utc_title.PNG" alt="" width="100%" height="100%"></a>
       <i class="fas fa-bars show_menu" style="font-size: 25px;" onclick="menu_show()"></i>
     </div>
@@ -63,23 +63,18 @@
                 <div class="col-lg-4" style="height: 50px;"> <input formaction="" type="submit" onclick="searchthuoc()" id="btn_search" value="Search" class="btn btn-success" style="height: 34px;"></div>
             </form>
         </div>
-     </div> 
+    </div> 
 
-     <div class="col-md-2" style="padding-top: 90px;font-size: 15px;font-weight: bold;">
-       <a href="dangnhap.php"><i class="fas fa-sign-out-alt"></i>  Đăng xuất   |</a>
-        
+    <div class="col-md-2" style="padding-top: 90px;font-size: 15px;font-weight: bold;">
+      <a href="dangnhap.php"><i class="fas fa-sign-out-alt"></i>  Đăng xuất   |</a>
       <a href="https://www.utc.edu.vn/"><i class="fas fa-phone-alt"></i>Liên hệ   </a> 
-     </div>
+    </div>
 
      <div class="col-md-1" style="padding-top: 60px;height: 50px;">
       <a href="index.php?detail=thongtinnv">
-     <img id="profile-img" class="profile-img-card" src="images/<?php
-                        require_once 'ketnoi_pdo.php';
+     <img id="profile-img" class="profile-img-card" src="images/<?php require_once 'ketnoi_pdo.php';
                         $nsx = db()->query("SELECT * FROM NhanVien Where MaNV='".$_SESSION["name"]."' ");
-                        while($row = $nsx->fetch()){
-                          echo $row['HinhAnh'];
-                        }
-                  ?>" style="width: 50px;height: 50px;" />
+                        while($row = $nsx->fetch()){echo $row['HinhAnh'];}?>" style="width: 50px;height: 50px;" />
      </a>
      </div>
      
@@ -95,79 +90,11 @@
      </div>
 
  </div>
- <!--
-<marquee behavior="alternate" id="marq" scrollamount="4" direction="left" loop="50" scrolldelay="0" onmouseover="this.stop()" onmouseout="this.start()">
-<a href="Link"><img src="images/v01.png" title="" width="500" height="150" style="border-right: 1px #b3d9ff solid;"/> </a>
-<a href="Link"><img src="images/v02.png" title="" width="500" height="150" style="border-right: 1px #b3d9ff solid;"/> </a>
-<a href="Link"><img src="images/v03.png" title="" width="500" height="150" style="border-right: 1px #b3d9ff solid;"/> </a>
-<a href="Link"><img src="images/v04.jpg" title="" width="500" height="150"/> </a>
-</marquee>-->
 <hr style="border: 1px #b3d9ff solid;">
 
 
  <div class="row" style="margin: 0px;padding: 0px;"> 
-<!--
-  <div class="col-md-2" style="margin: 0px;padding: 0px;">  
-   <nav class="mainNav" style="margin: 0px;padding: 0px;"> 
-    <ul> 
-     <li class="selected" style="margin: 0px;padding: 0px;"><a href=""><i class="fas fa-user"></i>    Tài khoản</a> 
-         <ul> 
-             <li><a href="index.php?detail=thongtinnv"><i class="fas fa-plus"></i>  Thông tin tài khoản</a></li> 
-             <li><a href="doimatkhau.php"><i class="fas fa-plus"></i>  Đổi mật khẩu</a></li> 
-         </ul> 
-     </li> 
-     <li><a><i class="far fa-keyboard"></i>    Quản lý thuốc</a> 
-           <ul> <li><a href="index.php"><i class="fas fa-plus"></i>Danh sách thuốc</a></li>
-               <li><a href="them_thuoc.php"><i class="fas fa-plus"></i>  Thêm thuốc</a></li> 
-               <li><a href="them_hoadonnhap.php"><i class="fas fa-plus"></i>  Nhập Thuốc</a> </li> 
-               <li><a href="index.php?detail=dshdb"><i class="fas fa-plus"></i>  Bán thuốc</a></li> 
-               <li><a href="index.php?detail=dshuy"><i class="fas fa-plus"></i>  Hủy thuốc</a></li> 
-          </ul> 
-     </li> 
-     <li><a href="http://hocwebgiare.com/"><i class="fas fa-paperclip"></i>    Quản lý danh mục</a> 
-          <ul> 
-               <li><a href="index.php?detail=nhacungcap"><i class="fas fa-plus"></i>  Nhà cung cấp</a></li> 
-               <li><a href="index.php?detail=benhnhan"><i class="fas fa-plus"></i>  Bệnh nhân</a></li> 
-               <li><a href="index.php?detail=nhanvien"><i class="fas fa-plus"></i>  Nhân viên</a></li>  
-               <li><a href="index.php?detail=nhomthuoc"><i class="fas fa-plus"></i>  Nhóm thuốc</a></li> 
-               <li><a href="index.php?detail=donvithuoc"><i class="fas fa-plus"></i>  Đơn vị tính</a></li>
-               <li><a href="index.php?detail=nhasanxuat"><i class="fas fa-plus"></i>  Nhà sản xuất</a></li> 
-               <li><a href="index.php?detail=chucvu"><i class="fas fa-plus"></i>  Chức vụ</a></li> 
-          </ul>  
-      </li> 
-      <li><a><i class="far fa-id-card"></i>    Thống kê</a> 
-            <ul> 
-                <li><a href="index.php?detail=thongke"><i class="fas fa-plus"></i>  Thống kê thuốc</a></li> 
-                <li><a href="xuat_excel_ngay.php?cv=<?php require_once'phanquyen.php'; echo ketqua($_SESSION['name']); ?>" onclick="thongke()"><i class="fas fa-plus" ></i>  Báo cáo theo ngày</a></li> 
-                <script type="text/javascript">
-                  function themnv()
-                 {
-                    
-                   var x=<?php require_once'phanquyen.php';echo(ketqua($_SESSION['name'])); ?>;
-                  if(x=="1"){
-                      alert("Bạn đủ quyền thêm nhân viên");
-                  }else{
-                      alert("Bạn không phải là giám đốc");
-                  }
-                 }            
-                  function thongke()
-                 {
-                    
-                   var x=<?php require_once'phanquyen.php';echo(ketqua($_SESSION['name'])); ?>;
-                  if(x=="1"){
-                      alert("Xuất báo cáo thành công");
-                  }else{
-                      alert("Bạn không phải là giám đốc");
-                  }
-                 }                 
-                </script>
-            </ul> 
-      </li> 
-       </ul> 
-    </nav> 
-  </div> 
--->
-  <div class="col-md-6" style="margin: 0px;padding: 0px;">  
+  <div class="col-md-6" style="margin: 0px;padding: 0px; width: 50%;">  
       <?php
       if(isset($_GET["detail"])){
         if($_GET["detail"]=="thongtinnv"){
@@ -220,7 +147,7 @@
         }
       ?>
   </div>  
-  <div class="col-md-6" style="height: 600px;border-left: 2px solid #99ccff; margin: 0px;padding: 0px;">
+  <div class="col-md-6" style="height: 600px;border-left: 2px solid #99ccff; margin: 0px;padding: 0px; width: 50%">
           <?php
               if(empty($_SESSION['mabn'])){
           ?>
@@ -261,22 +188,22 @@
 <nav class="nav" id="nav" style="margin: 0px;padding: 0px;"> 
     <ul>
       <li><i class="fas fa-times" style="font-size: 25px;color: black;padding-left: 150px" onclick="menu_dis()"></i></li>
-     <li class="selected" style="margin: 0px;padding: 0px;"><a href=""><i class="fas fa-user"></i>Tài khoản</a> 
+     <li class="selected" style="margin: 0px;padding: 0px;"><a href="" style="color: blue;"><i class="fas fa-user"></i>Tài khoản</a> 
          <ul>
     
              <li><a href="index.php?detail=thongtinnv"><i class="fas fa-plus"></i>  Thông tin tài khoản</a></li> 
              <li><a href="doimatkhau.php"><i class="fas fa-plus"></i>  Đổi mật khẩu</a></li> 
          </ul> 
      </li> 
-     <li><a><i class="far fa-keyboard"></i>    Quản lý thuốc</a> 
+     <li><a style="color: blue;"><i class="far fa-keyboard"></i>    Quản lý thuốc</a> 
            <ul> <li><a href="index.php"><i class="fas fa-plus"></i>Danh sách thuốc</a></li>
                <li><a href="them_thuoc.php"><i class="fas fa-plus"></i>  Thêm thuốc</a></li> 
                <li><a href="them_hoadonnhap.php"><i class="fas fa-plus"></i>  Nhập Thuốc</a> </li> 
-               <li><a href="index.php?detail=dshdb"><i class="fas fa-plus"></i>  Bán thuốc</a></li> 
-               <li><a href="index.php?detail=dshuy"><i class="fas fa-plus"></i>  Hủy thuốc</a></li> 
+               <li><a href="index.php?detail=dshdb"><i class="fas fa-plus"></i>  Danh sách bán thuốc</a></li> 
+               <li><a href="index.php?detail=dshuy"><i class="fas fa-plus"></i>  Danh sách hủy thuốc</a></li> 
           </ul> 
      </li> 
-     <li><a href="http://hocwebgiare.com/"><i class="fas fa-paperclip"></i>    Quản lý danh mục</a> 
+     <li><a href="" style="color: blue;"><i class="fas fa-paperclip"></i>    Quản lý danh mục</a> 
           <ul> 
                <li><a href="index.php?detail=nhacungcap"><i class="fas fa-plus"></i>  Nhà cung cấp</a></li> 
                <li><a href="index.php?detail=benhnhan"><i class="fas fa-plus"></i>  Bệnh nhân</a></li> 
@@ -287,7 +214,7 @@
                <li><a href="index.php?detail=chucvu"><i class="fas fa-plus"></i>  Chức vụ</a></li> 
           </ul>  
       </li> 
-      <li><a><i class="far fa-id-card"></i>    Thống kê</a> 
+      <li><a style="color: blue;"><i class="far fa-id-card" ></i>    Thống kê</a> 
             <ul> 
                 <li><a href="index.php?detail=thongke"><i class="fas fa-plus"></i>  Thống kê thuốc</a></li> 
                 <li><a href="xuat_excel_ngay.php?cv=<?php require_once'phanquyen.php'; echo ketqua($_SESSION['name']); ?>" onclick="thongke()"><i class="fas fa-plus" ></i>  Báo cáo theo ngày</a></li> 
@@ -350,11 +277,11 @@
           max-width: 100%;
         }
         .nav {  
-width: auto;    
-margin:0px auto;    
-color: #FFF;    
-background-color: #F60;
-}
+          width: auto;    
+          margin:0px auto;    
+          color: #FFF;    
+          background-color: #F60;
+        }
 .table-dark {
   color: #fff;
   background-color: #663300;
@@ -445,8 +372,10 @@ background-position: 0;
 width: 100%;
 }
 }
-        
+
 </style>
-<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<?PHP
+   echo getLoThuocCTHDN(5);
+?>
 </body>
 </html>

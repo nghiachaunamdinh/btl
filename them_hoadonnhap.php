@@ -15,36 +15,66 @@
         <?php
              session_start();
           
-             if(isset($_POST['them'])){
-
-                   require_once('ketnoi_pdo.php');
-                                  $t="";
-                                  $nsx=date_create($_POST['nsx']);//ngày sản xuát
-                                   $nsx=date_format($nsx,"Y/m/d");
-                                   $hsd=date_create($_POST['hsd']);//hạn sử dụng
-                                   $hsd=date_format($hsd,"Y/m/d");
-                                   if($_POST['soluong']==""||$_POST['soluong']<1){
-                                      $r="Số lượng phải lớn hon 0 và không được để trống .";
-
-                                  }else{
-                                  if(strtotime($nsx)>=strtotime($hsd)){
-                                           $r="Ngày sản xuất không được sau  hạn sử dụng";
-                                  }else{
-                                  try{
-                                        insertHDN($_POST['ncc'], $_SESSION["name"]);
-                                        date_default_timezone_set('UTC');
-                                        $date=date('Y/m/d H:i:s');
-                                        $max=selectmax("HoaDonNhap","MaHDN");
-                                        insertCTHDN($max,$_POST['thuoc'],$date,$_POST['gianhap'],$_POST['soluong'],$_POST['lothuoc'],$nsx,$hsd);
-                                        header("Location:index.php");
-                                        $t="Thêm hóa đơn nhập thành công";
-                                  }catch(PDOException $e){
-                                       $r="đăng ký không thành công";
-                                  }
-                                  }
-                                }
+          if(isset($_POST['them'])){
+            require_once('ketnoi_pdo.php');
+            $t="";
+            $nsx=date_create($_POST['nsx']);//ngày sản xuát
+            $nsx=date_format($nsx,"Y/m/d");
+            $hsd=date_create($_POST['hsd']);//hạn sử dụng
+            $hsd=date_format($hsd,"Y/m/d");
+            if($_POST['soluong']==""||$_POST['soluong']<1){
+              $r="Số lượng phải lớn hon 0 và không được để trống .";
+            }else{
+              if(date("Y",strtotime($nsx))>date("Y",strtotime($hsd))){
+                $r="Ngày sản xuất không được sau  hạn sử dụng";
+              }elseif(date("Y",strtotime($nsx))<date("Y",strtotime($hsd))){
+                try{
+                  insertHDN($_POST['ncc'], $_SESSION["name"]);
+                  date_default_timezone_set('UTC');
+                  $date=date('Y/m/d H:i:s');
+                  $max=selectmax("HoaDonNhap","MaHDN");
+                  insertCTHDN($max,$_POST['thuoc'],$date,$_POST['gianhap'],$_POST['soluong'],$_POST['lothuoc'],$nsx,$hsd);
+                  header("Location:index.php");
+                  $t="Thêm hóa đơn nhập thành công";
+                  }catch(PDOException $e){
+                    $r="đăng ký không thành công";
+                  }
+              }else{
+                if(date("m",strtotime($nsx))>date("m",strtotime($hsd))){
+                  $r="Ngày sản xuất không được sau hạn sử dụng.Nhập lại!";
+                }elseif(date("m",strtotime($nsx))<date("m",strtotime($hsd))){
+                    try{
+                    insertHDN($_POST['ncc'], $_SESSION["name"]);
+                    date_default_timezone_set('UTC');
+                    $date=date('Y/m/d H:i:s');
+                    $max=selectmax("HoaDonNhap","MaHDN");
+                    insertCTHDN($max,$_POST['thuoc'],$date,$_POST['gianhap'],$_POST['soluong'],$_POST['lothuoc'],$nsx,$hsd);
+                    header("Location:index.php");
+                    $t="Thêm hóa đơn nhập thành công";
+                    }catch(PDOException $e){
+                      $r="đăng ký không thành công";
+                    }
+                }else{
+                  if(date("d",strtotime($nsx))>=date("d",strtotime($hsd))){
+                    $r="Kiểm tra lại ngày sản xuất.Nhập lại!";
+                  }else{
+                    try{
+                      insertHDN($_POST['ncc'], $_SESSION["name"]);
+                      date_default_timezone_set('UTC');
+                      $date=date('Y/m/d H:i:s');
+                      $max=selectmax("HoaDonNhap","MaHDN");
+                      insertCTHDN($max,$_POST['thuoc'],$date,$_POST['gianhap'],$_POST['soluong'],$_POST['lothuoc'],$nsx,$hsd);
+                      header("Location:index.php");
+                      $t="Thêm hóa đơn nhập thành công";
+                      }catch(PDOException $e){
+                        $r="đăng ký không thành công";
+                      }
+                  }
+                }
+              }
+            }
           }else{
-                $r="Nhập thông tin hóa đơn .";
+            $r="Nhập thông tin hóa đơn .";
           }
          ?>
         <div class="card card-container" style="margin-top: 0px;padding-top: 0px;"> 
@@ -160,7 +190,7 @@
              }
               
         }
-        function thongbao() {
+        /*function thongbao() {
     		var x='<?php echo $t; ?>';
              if (x!="") {
                  alert(x);
@@ -168,7 +198,7 @@
              	 alert('Không thành công');
              }
               
-        }
+        }*/
     </script>
     
 </body>

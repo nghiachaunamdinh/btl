@@ -1,21 +1,21 @@
 <?php
  
-//kết nối bnagwf phương thức PDO
+//kết nối bnagwf phương thức PDO 
 function db(){
    $options = [
         PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         PDO::ATTR_EMULATE_PREPARES   => false,
     ];
-    $db = new PDO("mysql:host=localhost;dbname=qlst;charset=utf8mb4", "root", "");   
+    $db = new PDO("mysql:dbname=qlst;host=localhost;", "root", ""); 
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $db;
 }
 
 //kiem tra mật khẩu cũ nhập vào
 function test($s){
-	 $conn = mysqli_connect("localhost", "root", "", "qlst"); 
-     mysqli_set_charset($conn, "utf8");
+	$conn = mysqli_connect("localhost", "root", "", "qlst"); 
+    mysqli_set_charset($conn, "utf8");
     $result = mysqli_query($conn, "SELECT * FROM DangNhap");
     while($row = mysqli_fetch_assoc($result)){
         if($row["MatKhau"]==$s){
@@ -42,7 +42,7 @@ function selectmax($benhnhan,$MaBN){
 
 //insert tài khoản đăng nhập
 function insert($MaNV,$TenDangNhap,$MatKhau){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //Câu truy vấn
     $sql = "INSERT INTO DangNhap (MaNV,TenDangNhap, MatKhau) VALUES (?,?,?)";
@@ -51,7 +51,7 @@ function insert($MaNV,$TenDangNhap,$MatKhau){
 }
 //insert hóa đơn nhâp 
 function insertHDN($MaNCC,$MaNV){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //Câu truy vấn
     $sql = "INSERT INTO HoaDonNhap (MaNCC,MaNV) VALUES (?,?)";
@@ -61,7 +61,7 @@ function insertHDN($MaNCC,$MaNV){
 
 //insert chi tiết hóa đơn nhập
 function insertCTHDN($MaHDN,$MaThuoc,$ThoiGian,$gianhap,$SoLuong,$lothuoc,$ngaysanxuat,$hansudung){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //Câu truy vấn
     $sql = "INSERT INTO ChiTietHoaDonNhap (MaHDN,MaThuoc,ThoiGian,GiaNhap,SoLuong,LoThuoc,NgaySanXuat,HanSuDung) VALUES (?,?,?,?,?,?,?,?)";
@@ -70,7 +70,7 @@ function insertCTHDN($MaHDN,$MaThuoc,$ThoiGian,$gianhap,$SoLuong,$lothuoc,$ngays
 }
 //insert hóa đơn bán
 /*function insertCTHDB($MaHDB,$MaThuoc,$ThoiGian,$SoLuong,$MaHDN){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //Câu truy vấn
     $sql = "INSERT INTO DangNhap (MaHDB,MaThuoc,ThoiGian,SoLuong,MaHDN) VALUES (?,?,?,?,?)";
@@ -127,7 +127,7 @@ function testsocmt($s){
 }
 //insert chức vụ
 function insertCV($sdt,$cmt){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO ChucVu (TenCV,GhiChu) VALUES (?,?)";
     $stmt= $connect->prepare($sql);
@@ -135,7 +135,7 @@ function insertCV($sdt,$cmt){
 }
 //delete chức vụ
 function deleteCV($cv,$t){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM ".$cv." WHERE MaCV='".$t."'";
     $stmt= $connect->prepare($sql);
@@ -143,7 +143,7 @@ function deleteCV($cv,$t){
 }
 //update chức vụ
 function UpdateCV($manv,$ten,$diachi){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE ChucVu SET TenCV='".$ten."',GhiChu='".$diachi."' WHERE MaCV='".$manv."'";
    $stmt = $connect->prepare($sql);
@@ -151,7 +151,7 @@ function UpdateCV($manv,$ten,$diachi){
 }
 //update mật khảu
 function UpdateMatKhauQuen($manv,$matkhau){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE DangNhap SET MatKhau='".$matkhau."' WHERE MaNV='".$manv."'";
    $stmt = $connect->prepare($sql);
@@ -159,7 +159,7 @@ function UpdateMatKhauQuen($manv,$matkhau){
 }
 //test maxn
 function testmaxn($manv,$matkhau){
-   $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+   $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM DangNhap where MaNV='".$manv."'");
     $sum=0;
@@ -177,7 +177,7 @@ function testmaxn($manv,$matkhau){
 
 //insert đơn vị tính
 function insertDVT($sdt,$cmt){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO DonViTinh (TenDVT,GhiChu) VALUES (?,?)";
     $stmt= $connect->prepare($sql);
@@ -185,7 +185,7 @@ function insertDVT($sdt,$cmt){
 }
 //delete đơn vị tính
 function deleteDVT($cv,$t){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM ".$cv." WHERE MaDVT='".$t."'";
     $stmt= $connect->prepare($sql);
@@ -193,7 +193,7 @@ function deleteDVT($cv,$t){
 }
 //update đơn vị tính
 function UpdateDVT($manv,$ten,$diachi){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE DonViTinh SET TenDVT='".$ten."',GhiChu='".$diachi."' WHERE MaDVT='".$manv."'";
    $stmt = $connect->prepare($sql);
@@ -201,7 +201,7 @@ function UpdateDVT($manv,$ten,$diachi){
 }
 //update mã sn dang nhap
 function UpdateDangNhap($ten,$manv){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE DangNhap SET MaSN='".$ten."' WHERE Manv='".$manv."'";
    $stmt = $connect->prepare($sql);
@@ -209,7 +209,7 @@ function UpdateDangNhap($ten,$manv){
 }
 //insert nhà sản xuất
 function insertNSX($sdt,$cmt){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO NhaSanXuat (TenNSX,GhiChu) VALUES (?,?)";
     $stmt= $connect->prepare($sql);
@@ -217,7 +217,7 @@ function insertNSX($sdt,$cmt){
 }
 //delete nhà sản xuất
 function deleteNSX($cv,$t){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM ".$cv." WHERE MaNSX='".$t."'";
     $stmt= $connect->prepare($sql);
@@ -225,7 +225,7 @@ function deleteNSX($cv,$t){
 }
 //update nhà sản xuất
 function UpdateNSX($manv,$ten,$diachi){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE NhaSanXuat SET TenNSX='".$ten."',GhiChu='".$diachi."' WHERE MaNSX='".$manv."'";
    $stmt = $connect->prepare($sql);
@@ -233,7 +233,7 @@ function UpdateNSX($manv,$ten,$diachi){
 }
 //insert nhóm thuốc
 function insertNT($sdt,$cmt){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', ''); 
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root",""); 
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO NhomThuoc (TenNT,GhiChu) VALUES (?,?)";
     $stmt= $connect->prepare($sql);
@@ -241,7 +241,7 @@ function insertNT($sdt,$cmt){
 }
 //delete nhóm thuốc
 function deleteNT($cv,$t){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM ".$cv." WHERE MaNT='".$t."'";
     $stmt= $connect->prepare($sql);
@@ -249,7 +249,7 @@ function deleteNT($cv,$t){
 }
 //update nhóm thuốc
 function UpdateNT($manv,$ten,$diachi){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE NhomThuoc SET TenNT='".$ten."',GhiChu='".$diachi."' WHERE MaNT='".$manv."'";
    $stmt = $connect->prepare($sql);
@@ -257,23 +257,23 @@ function UpdateNT($manv,$ten,$diachi){
 }
 //insert  bệnh nhân
 function insertBN($Ten,$sdt){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO BenhNhan (TenBN,SDT) VALUES (?,?)";
     $stmt= $connect->prepare($sql);
     $stmt->execute([$Ten, $sdt]);
 }
 //update benh nhân
-function Updatebenhnhan($manv,$sdt,$cmt,$diachi,$ghichu){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+function Updatebenhnhan($manv,$sdt,$cmt){
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $sql="UPDATE BenhNhan SET TenBN='".$sdt."',SDT='".$cmt."',SoCMT='".$diachi."',DiaChi='".$ghichu."' WHERE MaBN='".$manv."'";
+    $sql="UPDATE BenhNhan SET TenBN='".$sdt."',SDT='".$cmt."'";
    $stmt = $connect->prepare($sql);
    $stmt->execute();
 }
 //delete nhà cung cấp
 function deleteNCC($cv,$t){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM ".$cv." WHERE MaNCC='".$t."'";
     $stmt= $connect->prepare($sql);
@@ -281,7 +281,7 @@ function deleteNCC($cv,$t){
 }
 //update nhà cung cấp
 function UpdateNCC($manv,$ten,$diachi,$sdt){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE NhaCungCap SET TenNCC='".$ten."',DiaChi='".$diachi."',SDT='".$sdt."' WHERE MaNCC='".$manv."'";
    $stmt = $connect->prepare($sql);
@@ -289,7 +289,7 @@ function UpdateNCC($manv,$ten,$diachi,$sdt){
 }
 //insert nhà cung cấp
 function insertNCC($MaNV,$TenDangNhap,$MatKhau){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //Câu truy vấn
     $sql = "INSERT INTO NhaCungCap (TenNCC,DiaChi, SDT) VALUES (?,?,?)";
@@ -298,7 +298,7 @@ function insertNCC($MaNV,$TenDangNhap,$MatKhau){
 }
 //INSERT nhan vien
 function insertNhanVien($sdt,$cmt,$diachi,$ghichu,$HinhAn,$cv,$t){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "INSERT INTO NhanVien (TenNV,Email,DiaChi,SDT,SoCMT,HinhAnh,MaCV) VALUES (?,?,?,?,?,?,?)";
     $stmt= $connect->prepare($sql);
@@ -306,7 +306,7 @@ function insertNhanVien($sdt,$cmt,$diachi,$ghichu,$HinhAn,$cv,$t){
 }
 //delete nhan viên
 function delete($cv,$t){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM ".$cv." WHERE MaNV='".$t."'";
     $stmt= $connect->prepare($sql);
@@ -314,7 +314,7 @@ function delete($cv,$t){
 }
 //update  nhan vien
 function UpdateNhanVien($manv,$sdt,$cmt,$diachi,$ghichu,$HinhAn,$cv,$t){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE NhanVien SET TenNV='".$sdt."',Email='".$cmt."',DiaChi='".$diachi."',SDT='".$ghichu."',SoCMT='".$HinhAn."',HinhAnh='".$cv."',MaCV='".$t."' WHERE MaNV='".$manv."'";
     //$sql = "INSERT INTO NhanVien (MaNV,TenNV,Email,DiaChi,SDT,SoCMT,HinhAnh,MaCV) VALUES (?,?,?,?,?,?,?,?)";
@@ -324,7 +324,7 @@ function UpdateNhanVien($manv,$sdt,$cmt,$diachi,$ghichu,$HinhAn,$cv,$t){
 
 //thêm hóa đơn bán
 function insertHDB($Ten,$ghichu,$date){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //Câu truy vấn
     $sql = "INSERT INTO HoaDonBan (MaBN,MaNV,ThoiGian) VALUES (?,?,?)";
@@ -349,7 +349,7 @@ function thoigian($s){
  //insert thuốc
  function insertThuoc($MaNSX,$MaDVT,$MaNT,$GiaBan,$TenThuoc,$GhiChu,$HinhAnh) 
  {
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     //Câu truy vấn
     $sql = "INSERT INTO Thuoc (MaNSX,MaDVT,MaNT,GiaBan,TenThuoc,GhiChu,HinhAnh) VALUES (?,?,?,?,?,?,?)";
@@ -358,7 +358,7 @@ function thoigian($s){
  }
  //delete thuoc
 function deleteThuoc($t){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM ChiTietHoaDonBan WHERE MaThuoc='".$t."'";
     $stmt= $connect->prepare($sql);
@@ -379,25 +379,82 @@ function deleteThuoc($t){
     }
     return  $num;
  }*/
- function insertCTHDB($MaHDB,$MaThuoc,$SoLuong)
+ function insertCTHDB($MaHDB,$MaThuoc,$SoLuong,$LoThuoc)                                              
  {
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
     date_default_timezone_set('UTC');
     $date=date('Y/m/d H:i:s');
     //Câu truy vấn
-    $sql = "INSERT INTO ChiTietHoaDonBan (MaHDB,MaThuoc,ThoiGian,SoLuong) VALUES (?,?,?,?)";
+    $sql = "INSERT INTO ChiTietHoaDonBan (MaHDB,MaThuoc,ThoiGian,SoLuong,LoThuoc) VALUES (?,?,?,?,?)";
     $stmt= $connect->prepare($sql);
-    $stmt->execute([$MaHDB,$MaThuoc,$date,$SoLuong]);///////
+    $stmt->execute([$MaHDB,$MaThuoc,$date,$SoLuong,$LoThuoc]);
+ }
+ //Lấy ra lô thuốc của 1 mã thuốc có HSD ngắn nhất
+ function getLoThuocCTHDN($MaThuoc){
+    $LoThuoc="";
+    $X=0;
+    $LoThuocTam="";
+    $date="9999-03-02 05:36:57";
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM ChiTietHoaDonNhap where MaThuoc='".$MaThuoc."'");
+    while($row = $result->fetch()) {
+        if(slbanLoThuoc($MaThuoc,$row['LoThuoc'])<=slnhapLoThuoc($MaThuoc,$row['LoThuoc'])){//chí lấy những thuốc có lô thuốc còn
+            if($X!=0){
+            if(date("Y",strtotime($row['HanSuDung']))<date("Y",strtotime($date))){
+                $LoThuoc=$row['LoThuoc'];
+                $date=$row['HanSuDung'];
+            }elseif(date("Y",strtotime($row['HanSuDung']))>date("Y",strtotime($date))){
+                $LoThuoc=$LoThuoc;
+            }else{
+                if(date("m",strtotime($row['HanSuDung']))<date("m",strtotime($date))){
+                    $LoThuoc=$row['LoThuoc'];
+                     $date=$row['HanSuDung'];
+                }elseif(date("m",strtotime($row['HanSuDung']))>date("m",strtotime($date))){
+                    $LoThuoc=$LoThuoc;
+                }else{
+                    if(date("d",strtotime($row['HanSuDung']))<date("d",strtotime($date))){
+                        $LoThuoc=$row['LoThuoc'];
+                         $date=$row['HanSuDung'];
+                    }elseif(date("d",strtotime($row['HanSuDung']))>date("d",strtotime($date))){
+                        $LoThuoc=$LoThuoc;
+                    }else{
+                        /*if(date("H",strtotime($row['HanSuDung']))<date("H",strtotime($date))){
+                            $LoThuoc=$row['LoThuoc'];
+                        }elseif(date("H",strtotime($row['HanSuDung']))>date("H",strtotime($date))){
+                            $LoThuoc=$LoThuoc;
+                        }else{
+                            if(date("i",strtotime($row['HanSuDung']))<date("i",strtotime($date))){
+                                $LoThuoc=$row['LoThuoc'];
+                            }elseif(date("i",strtotime($row['HanSuDung']))>date("i",strtotime($date))){
+                                $LoThuoc=$LoThuoc;
+                            }else{*/
+                                $LoThuoc=$LoThuoc;;
+                        /*  }
+                        }*/
+                    }
+                }
+            }
+            }else{
+                $LoThuocTam=$row['LoThuoc'];
+                $date=$row['HanSuDung'];
+                $LoThuoc=$row['LoThuoc'];
+            }
+            $X++;
+        }
+    }
+    if($X==1){
+        $LoThuoc=$LoThuocTam;
+    }
+    return $LoThuoc;
  }
  //tính tông tiền của hóa đơn
  function sumCTHDB($MaHDB)
  {
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  
     $result = $connect->query("select * FROM ChiTietHoaDonBan where MaHDB='".$MaHDB."'");
-   
     $sum=0;
    while($row = $result->fetch()) {
     $sum+= $row['SoLuong']*((FLOAT)giaban($row['MaThuoc']));
@@ -408,7 +465,7 @@ function deleteThuoc($t){
  //TÌM GIÁ BÁN
 function giaban($MaHDB)
  {
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', ''); 
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root",""); 
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM Thuoc where MaThuoc='".$MaHDB."'");
    while($row = $result->fetch()) {
@@ -418,7 +475,7 @@ function giaban($MaHDB)
 }
 //update Cthdb
 function UpdateCTHDB($mathuoc,$mahdb,$soluong){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE ChiTietHoaDonBan SET SoLuong='".$soluong."' WHERE MaThuoc='".$mathuoc."' and MaHDB = '".$mahdb."'";
    $stmt = $connect->prepare($sql);
@@ -426,10 +483,10 @@ function UpdateCTHDB($mathuoc,$mahdb,$soluong){
 }
 
 
-//đén số thuốc trong hóa đơn
+//đếm số thuốc trong hóa đơn
 function countCTHDB($MaHDB)
  {
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM ChiTietHoaDonBan where MaHDB='".$MaHDB."'");
     $sum=0;
@@ -440,7 +497,7 @@ function countCTHDB($MaHDB)
  }
  //xóa hóa đơn
  function deleteCTHDB($t){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql = "DELETE FROM HoaDonBan WHERE MaHDB='".$t."'";
     $stmt= $connect->prepare($sql); 
@@ -449,7 +506,7 @@ function countCTHDB($MaHDB)
 //kiểm tra tồn tại mã thuốc trong ds mua hay chưa
 function testThuocCTHDB($MaThuoc,$mahdb)
  {
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM ChiTietHoaDonBan where MaThuoc='".$MaThuoc."'");
     $sum=0;
@@ -466,7 +523,7 @@ function testThuocCTHDB($MaThuoc,$mahdb)
  }
  //trả về số lượng 1 sản phẩm trong dsmua
  function slthuoc($MaThuoc,$mahdb){
-  $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+  $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM ChiTietHoaDonBan where MaThuoc='".$MaThuoc."' and MaHDB = '".$mahdb."'");
     $t="";
@@ -477,18 +534,18 @@ function testThuocCTHDB($MaThuoc,$mahdb)
 }
 //trả về số lượng sản phẩm trong dsmua
  function slthuoctrongdsmua($mahdb){ 
-  $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+  $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM ChiTietHoaDonBan where MaHDB = '".$mahdb."'");
     $t=0;
     while($row = $result->fetch()) {
        $t += 1;
-    }
+    } 
     return $t;
 }
  //trả về số lượng sản phẩm đã nhập
  function slnhap($MaThuoc){
-  $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+  $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM ChiTietHoaDonNhap where MaThuoc='".$MaThuoc."'");
     $t=0;
@@ -497,9 +554,10 @@ function testThuocCTHDB($MaThuoc,$mahdb)
     }
     return $t;
 }
+
 //trả về số lượng thuốc đã bán
  function slban($MaThuoc){
-  $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+  $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM ChiTietHoaDonBan where MaThuoc='".$MaThuoc."'");
     $t=0;
@@ -508,10 +566,32 @@ function testThuocCTHDB($MaThuoc,$mahdb)
     }
     return $t;
 }
+//trả về số lượng sản phẩm đã nhập theo lô thuốc
+ function slnhapLoThuoc($MaThuoc,$LoThuoc){
+  $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM ChiTietHoaDonNhap where MaThuoc='".$MaThuoc."' AND LoThuoc='".$LoThuoc."'");
+    $t=0;
+    while($row = $result->fetch()) {
+       $t+= $row['SoLuong'];
+    }
+    return $t;
+}
 
+//trả về số lượng thuốc đã bán theo lô thuốc
+ function slbanLoThuoc($MaThuoc,$LoThuoc){
+  $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM ChiTietHoaDonBan where MaThuoc='".$MaThuoc."' AND LoThuoc='".$LoThuoc."'");
+    $t=0;
+    while($row = $result->fetch()) {
+       $t+= $row['SoLuong'];
+    }
+    return $t;
+}
 //update tình trạng hdb
 function UpdateTinhtrangCTHDB($mahdb){
-    $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $sql="UPDATE HoaDonBan SET TinhTrang='huy' WHERE MaHDB = '".$mahdb."'";
    $stmt = $connect->prepare($sql);
@@ -519,7 +599,7 @@ function UpdateTinhtrangCTHDB($mahdb){
 }
 //kiểm tra tồn tại tài khoản
 function testdangky($madn){
-     $connect = new PDO('mysql:host=localhost;dbname=qlst', 'root', '');
+     $connect = new PDO('mysql:host=localhost;dbname=qlst', "root","");
     $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $result = $connect->query("select * FROM DangNhap ");
     $t=0;
@@ -530,5 +610,20 @@ function testdangky($madn){
        }
     }
     return false;
+}
+//Tính tông số tiền của 1 HDB trong chitiếtHDB
+function tongtienHDB($MaHDB)
+{
+    $sum=0;
+    $connect = new PDO('mysql:host=localhost;dbname=qlst', "root",""); 
+    $connect->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $result = $connect->query("select * FROM ChiTietHoaDonBan where MaHDB='".$MaHDB."'");
+    while($row = $result->fetch()) {
+        $r = $connect->query("select * FROM Thuoc where MaThuoc='".$row['MaThuoc']."'");
+        while($rows = $r->fetch()) {
+           $sum+=$rows['GiaBan']*$row['SoLuong'];
+        }
+    }
+    return $sum;
 }
 ?>

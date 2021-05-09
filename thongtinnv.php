@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-9">
             <table class="table table-striped">
-                <caption>Thông tin nhân viên : <span style="font-weight: bold;color: blue;"><?php echo $row["TenNV"] ?></span></caption>
+                <caption>Thông tin nhân viên : <span style="font-size: 50px;color: red;"><?php echo $row["TenNV"] ?></span></caption>
                 
                 <tbody>
                     <tr>

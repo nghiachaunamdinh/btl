@@ -30,8 +30,8 @@
 
 ?>
 <h2 align="center" style="color:red;font-weight: bold;">Thống kê thuốc</h2>
-        <table class="table table-hover" width="300px;">
-  <thead>
+<table class="table table-hover"  style="font-size:26px; ">
+  
     <tr>
       <th scope="col">STT</th>
       <th scope="col">Tên thuốc</th>
@@ -39,20 +39,19 @@
       <th scope="col">Gía bán</th>
       <th scope="col">Số lượng tồn</th>
     </tr>
-  </thead>
-  <tbody>
+  
+  
    <?php
      for($i=1;$i<=count($arrayName2);$i++){
     ?>
     <tr>
-      <th scope="row"><?php echo $i; ?></th>
+      <td scope="row"><?php echo $i; ?></td>
       <td><?php require_once 'ketnoi_pdo.php';
                 $nsx = db()->query("SELECT * FROM Thuoc where MaThuoc='".$i."'");
                 while($rows = $nsx->fetch()){
                        echo $rows["TenThuoc"];
                 } 
-           ?>
-                        	
+           ?>     	
       </td>
       <td><?php require_once 'ketnoi_pdo.php';
                 $nsx = db()->query("SELECT * FROM Thuoc where MaThuoc='".$i."'");
@@ -80,6 +79,4 @@
     <?php
     }
     ?>
-   
-  </tbody>
 </table>
